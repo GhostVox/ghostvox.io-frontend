@@ -1,22 +1,14 @@
-import { SignIn, SignUp } from "@clerk/nextjs";
-import Image from "next/image";
-export default function Home() {
+import Link from "next/link";
+
+export default async function Home() {
   return (
-    <div className="flex flex-col justify-center gap-4 items-center pt-4  ">
-      <h1 className="text-5xl "> Welcome to GhostVox</h1>
-      <p className="text-xl ">
-        GhostVox is a platform where communties come to vote on a wide range of
-        topics to get a general census of public discourse.
+    <div className="flex flex-col items-center justify-center items-centermin-h-screen py-2">
+      <h1 className="font-extrabold text-4xl shadow-md">Welcome to Ghostvox</h1>
+      <p>
+        Ghostvox is a platform for society to come together and vote on issues happening in our
+        community.
       </p>
-      <div className="flex">
-        <SignIn />
-        <Image
-          src="/ghostvox-logo.png"
-          alt="Ghostvox Logo"
-          height={400}
-          width={400}
-        />
-      </div>
+      <Link href="/dashboard">Dashboard</Link>
     </div>
   );
 }

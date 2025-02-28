@@ -11,8 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        Span: "var(--span)",
       },
     },
   },
+
   plugins: [],
 } satisfies Config;
