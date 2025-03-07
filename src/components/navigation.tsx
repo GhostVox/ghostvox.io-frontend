@@ -1,8 +1,7 @@
 import { Nosifer } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
-import PrimaryButton from "@/components/ui/primaryButton";
-
+import NavButtons from "@/components/navButtons";
 const nosifer = Nosifer({
   weight: "400", // Nosifer only comes in weight 400
   subsets: ["latin"],
@@ -18,12 +17,7 @@ export const Navigation = () => {
         </Link>
       </div>
       <div className="">
-        <Link href="/sign-in">
-          <PrimaryButton text="sign in" />
-        </Link>
-        <Link href="/sign-up">
-          <PrimaryButton text="sign up" />
-        </Link>
+        <NavButtons />
       </div>
     </nav>
   );

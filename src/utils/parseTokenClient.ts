@@ -14,13 +14,3 @@ export async function parseToken(token: string): Promise<User> {
   };
   return user;
 }
-
-export async function getAccessTokenAndReturnUser(response: Response): Promise<User | Error> {
-  const bearerString = response.headers.get("Authorization");
-  if (!bearerString) throw new Error("No token found");
-  const accessToken = bearerString.split(" ")[1];
-  if (!accessToken) throw new Error("No token found");
-
-  const user = parseToken(accessToken);
-  return user;
-}
