@@ -26,13 +26,12 @@ export function AuthCtxProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
+    if (user !== null) {
       return;
     }
     async function loadUserFromCookie() {
       try {
         const userData = await getSession();
-
         if (userData) {
           setUser(userData);
         }

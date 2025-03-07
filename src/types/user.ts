@@ -1,7 +1,8 @@
 export type User = {
   id: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   picture: string;
   role: string;
 };
@@ -12,7 +13,8 @@ export type Roles = "admin" | "moderator";
 export type updateUserRequest = {
   password?: string;
   email?: string;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   picture?: string;
   first_name?: string;
   last_name?: string;

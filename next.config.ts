@@ -8,6 +8,20 @@ const nextConfig: NextConfig = {
       key: process.env.SSL_KEY_FILE,
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

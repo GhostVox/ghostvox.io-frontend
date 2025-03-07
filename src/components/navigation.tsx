@@ -10,7 +10,7 @@ const nosifer = Nosifer({
 export const Navigation = () => {
   return (
     <nav className="flex justify-between p-4">
-      <div className=" flex gap-4">
+      <div className=" flex gap-4  lg:ml-0 sm:ml-20">
         <Link href="/">
           <Image src="/ghostvox-logo-transparent.png" width={40} height={40} alt="Ghostvox Logo" />
           <h1 className={nosifer.className}>GHOSTVOX</h1>
