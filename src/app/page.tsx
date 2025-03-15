@@ -2,7 +2,7 @@ import Link from "next/link";
 import PrimaryButton from "@/components/ui/primaryButton";
 import PollCard from "@/components/poll-card";
 import { ArrowRight, BarChart2, Users, MessageSquare, ChevronDown } from "lucide-react";
-import PollVisualization from "@/components/poll-visual";
+import { PollVisualization } from "@/components/poll-visual";
 
 export default function Home() {
   const categories = [

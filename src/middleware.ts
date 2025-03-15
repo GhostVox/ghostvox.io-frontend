@@ -4,13 +4,12 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   // In middleware, use request.cookies instead of cookies()
   const refreshToken = request.cookies.get("refreshToken");
-  const accessToken = request.cookies.get("accessToken");
 
   // Check if the user is trying to access protected routes
   const isProtectedRoute = !notProtectedRoutes.includes(request.nextUrl.pathname);
 
   // If accessing protected routes without tokens, redirect to sign-in
-  if (isProtectedRoute && (!refreshToken?.value || !accessToken)) {
+  if (isProtectedRoute && !refreshToken?.value) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 

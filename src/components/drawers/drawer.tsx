@@ -73,7 +73,7 @@ export const Drawer = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed top-0 left-0 lg:static lg:translate-x-0 z-20 h-full w-64 bg-white dark:bg-gray-800 shadow-lg border-r dark:border-gray-700 transition-transform duration-300 ease-in-out ${
+        } fixed  top-0 left-0 lg:static lg:translate-x-0 z-20 sm:h-full  w-64 bg-white dark:bg-gray-800 shadow-lg border-r dark:border-gray-700 transition-transform duration-500 ${
           !isOpen && !isMobile ? "lg:-translate-x-full lg:w-0" : ""
         }`}
       >

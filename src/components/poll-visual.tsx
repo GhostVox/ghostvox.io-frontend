@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const PollVisualization = () => {
+export const PollVisualization = () => {
   // Sample poll data
   const pollData = {
     question: "What's your favorite gaming platform?",
@@ -53,5 +53,3 @@ const PollVisualization = () => {
     </Card>
   );
 };
-
-export default PollVisualization;
