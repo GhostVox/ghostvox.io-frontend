@@ -80,7 +80,7 @@ export const RecentPolls = () => {
           </div>
 
           <div className="mt-6 text-center">
-            <Link href="/polls/create">
+            <Link href="/dashboard/create-poll">
               <button className="inline-flex items-center text-sm font-medium text-purple-600 hover:text-purple-700 dark:text-purple-400">
                 <PlusCircle className="h-4 w-4 mr-1" /> Create a New Poll
               </button>

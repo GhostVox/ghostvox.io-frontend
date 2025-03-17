@@ -15,7 +15,7 @@ export const Header = () => {
             </p>
           </div>
           <div className="mt-4 md:mt-0">
-            <Link href="/polls/create">
+            <Link href="/dashboard/create-poll">
               <PrimaryButton text="Create New Poll" />
             </Link>
           </div>

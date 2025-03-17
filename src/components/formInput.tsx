@@ -1,16 +1,30 @@
+import React from "react";
+
 type FormInputProps = {
   name: string;
   inputType: string;
-  label: string;
+  label: string | React.ReactNode;
   value: string;
   error: string | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 };
 
-export const FormInput = ({ name, inputType, label, value, error, onChange }: FormInputProps) => {
+export const FormInput = ({
+  name,
+  inputType,
+  label,
+  value,
+  error,
+  onChange,
+  className,
+}: FormInputProps) => {
   return (
     <div className="flex flex-col">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+      <label
+        htmlFor={name}
+        className={`block text-sm font-medium text-gray-700 dark:text-w mb-1 ${className}`}
+      >
         {label}
       </label>
       <input

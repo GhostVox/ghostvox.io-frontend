@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types/user";
 import { getSession } from "@/utils/getSession";
+import { redirect } from "next/navigation";
 
 // 1. Define the context type
 type UserCtxType = {
@@ -37,6 +38,7 @@ export function AuthCtxProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (error) {
         console.error("Error loading user from cookie:", error);
+        redirect("/sign-in");
       } finally {
         setLoading(false);
       }

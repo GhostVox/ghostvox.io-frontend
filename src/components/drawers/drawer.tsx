@@ -73,7 +73,7 @@ export const Drawer = () => {
       <div
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed  top-0 left-0 lg:static lg:translate-x-0 z-20 sm:h-full  w-64 bg-white dark:bg-gray-800 shadow-lg border-r dark:border-gray-700 transition-transform duration-500 ${
+        } fixed  top-0 left-0 lg:static lg:translate-x-0 z-20 sm:h-full  w-64 bg-white  dark:bg-gray-800 shadow-lg border-r dark:border-gray-700 transition-transform duration-500 ${
           !isOpen && !isMobile ? "lg:-translate-x-full lg:w-0" : ""
         }`}
       >
@@ -181,7 +181,7 @@ export const Drawer = () => {
               <ul className="space-y-1">
                 <li>
                   <Link
-                    href="/polls/create"
+                    href="/dashboard/create-poll"
                     className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-purple-50 dark:hover:bg-gray-700 group transition-colors"
                     onClick={() => isMobile && setIsOpen(false)}
                   >

@@ -10,7 +10,9 @@ export async function getSession(): Promise<User | null> {
     credentials: "include",
   });
   if (!response.ok) {
-    console.log("refresh token failed");
+    console.log("Unauthorized");
+    throw new Error("Unauthorized");
+
     return null;
   }
   const user = await getAccessTokenAndReturnUser(response);

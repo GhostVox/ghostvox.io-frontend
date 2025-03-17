@@ -28,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased  `}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 w-screen h-screen overflow-y-scroll overflow-x-hidden  `}
+      >
         <AuthCtxProvider>
           <Navigation />
           {children}

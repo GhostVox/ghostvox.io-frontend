@@ -9,12 +9,10 @@ export const metadata: Metadata = {
 };
 export default function DashboardLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="h-full bg-gray-50 dark:bg-gray-900 ">
-      <div className="flex  ">
-        <div className="flex gap-4 transition-all duration-300 ease-in-out">
-          <Drawer />
-          {children}
-        </div>
+    <div className=" relative min-h-screen bg-gray-50 dark:bg-gray-900 m-0 ">
+      <div className="flex gap-10 transition-all duration-300 ease-in-out">
+        <Drawer />
+        {children}
       </div>
     </div>
   );

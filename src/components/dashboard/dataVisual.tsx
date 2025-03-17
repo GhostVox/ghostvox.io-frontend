@@ -19,7 +19,7 @@ export const DataVisual = () => {
                   Browse Active Polls
                 </button>
               </Link>
-              <Link href="/polls/create">
+              <Link href="/dashboard/create-poll">
                 <button className="w-full text-left px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md text-sm transition-colors">
                   Create New Poll
                 </button>
