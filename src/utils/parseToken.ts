@@ -6,7 +6,7 @@ export async function parseToken(token: string): Promise<User> {
   if (parts.length !== 3) throw new Error("Invalid token");
 
   const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf8"));
-  console.log("payload:", payload);
+
   const user: User = {
     id: payload.sub,
     email: payload.email,
@@ -15,6 +15,7 @@ export async function parseToken(token: string): Promise<User> {
     picture: payload.picture_url,
     role: payload.role,
   };
+
   return user;
 }
 
