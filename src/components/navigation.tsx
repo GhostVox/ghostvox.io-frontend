@@ -18,7 +18,8 @@ export const Navigation = () => {
   const pathname = usePathname();
 
   // Check if we're on a dashboard page
-  const isDashboardPage = pathname?.startsWith("/dashboard");
+  const showNavigation =
+    pathname?.endsWith("/") || pathname?.startsWith("/sign-up") || pathname?.startsWith("/login");
 
   // Handle scroll events to add background when scrolled
   useEffect(() => {
@@ -26,14 +27,14 @@ export const Navigation = () => {
       setScrolled(window.scrollY > 10);
     };
 
-    if (!isDashboardPage) {
+    if (!showNavigation) {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
     }
-  }, [isDashboardPage]);
+  }, [showNavigation]);
 
   // Don't render navigation on dashboard pages
-  if (isDashboardPage) {
+  if (!showNavigation) {
     return null;
   }
 
