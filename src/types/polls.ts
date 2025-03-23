@@ -27,3 +27,5 @@ export interface FinishedPoll extends Poll {
 export interface ActivePoll extends Poll {
   daysLeft: number;
 }
+
+export type MyPoll = FinishedPoll | ActivePoll;
