@@ -4,56 +4,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BarChart2, Clock, MessageSquare, Filter, Search } from "lucide-react";
 import Link from "next/link";
 import PrimaryButton from "@/components/ui/primaryButton";
-
-// Define the types to match the backend response
-interface PollOption {
-  ID: string;
-  Name: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  PollID: string;
-  votes?: number;
-}
-
-interface FinishedPoll {
-  id: string;
-  title: string;
-  creator: string;
-  description: string;
-  category: string;
-  endedAt: string; // When the poll ended
-  options: PollOption[];
-  votes: number;
-  comments: number;
-  winner?: string; // The winning option
-}
-
-// List of categories to display in the filter dropdown
-const categories = [
-  "All Categories",
-  "Politics",
-  "Gaming",
-  "Movies",
-  "Technology",
-  "Sports",
-  "Music",
-  "Food",
-  "Travel",
-  "Health",
-  "Education",
-  "Business",
-  "Social Media",
-  "Entertainment",
-  "Other",
-];
-
-// Sort options for the dropdown
-const sortOptions = [
-  { value: "newest", label: "Newest First" },
-  { value: "oldest", label: "Oldest First" },
-  { value: "most-votes", label: "Most Votes" },
-  { value: "most-comments", label: "Most Comments" },
-];
+import { FinishedPoll } from "@/types/polls";
+import { categories, sortOptions } from "@/state/pollState";
+import { FetchPolls } from "@/hooks/fetchPolls";
+import { sortPolls, filterPolls } from "@/utils/polls";
+import ErrorCard from "@/components/cards/errorCard";
 
 export default function FinishedPollsPage() {
   // State hooks for the component
@@ -65,84 +20,24 @@ export default function FinishedPollsPage() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const LIMIT = 20;
 
   // Fetch polls from API when page or category changes
   useEffect(() => {
-    const fetchPolls = async () => {
-      setLoading(true);
-      try {
-        // Calculate offset based on page
-        const offset = (page - 1) * LIMIT;
-
-        // Build query parameters
-        let url = `${process.env.NEXT_PUBLIC_API_URL}/polls/finished?limit=${LIMIT}&offset=${offset}`;
-
-        // Add category filter if selected
-        if (selectedCategory !== "All Categories") {
-          url += `&category=${encodeURIComponent(selectedCategory)}`;
-        }
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch polls");
-        }
-
-        const data = await response.json();
-        if (!data) {
-          return;
-        }
-        // If we got fewer results than limit, we've reached the end
-        if (data.length < LIMIT) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
-
-        // If it's the first page, replace polls, otherwise append
-        if (page === 1) {
-          setPolls(data);
-        } else {
-          setPolls((prev) => [...prev, ...data]);
-        }
-
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching polls:", err);
-        setError("Error loading polls. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPolls();
+    FetchPolls<FinishedPoll>({
+      page: page,
+      selectedCategory,
+      setLoading,
+      setHasMore,
+      setPolls,
+      setError,
+    });
   }, [page, selectedCategory]);
 
   // Apply client-side filtering based on search query
-  const filteredPolls = polls.filter((poll) => {
-    // Apply search filter
-    if (searchQuery && !poll.title.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false;
-    }
-
-    return true;
-  });
+  const filteredPolls = filterPolls(polls, searchQuery);
 
   // Apply client-side sorting
-  const sortedPolls = [...filteredPolls].sort((a, b) => {
-    switch (sortBy) {
-      case "oldest":
-        return new Date(a.endedAt).getTime() - new Date(b.endedAt).getTime();
-      case "most-votes":
-        return b.votes - a.votes;
-      case "most-comments":
-        return b.comments - a.comments;
-      case "newest":
-      default:
-        return new Date(b.endedAt).getTime() - new Date(a.endedAt).getTime();
-    }
-  });
+  const sortedPolls = sortPolls(sortBy, filteredPolls);
 
   // Format end date for display
   const formatEndDate = (dateString: string) => {
@@ -256,17 +151,13 @@ export default function FinishedPollsPage() {
       )}
 
       {error && (
-        <div className="col-span-3 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-center my-6">
-          <div className="text-red-500 dark:text-red-400 mb-2">⚠️</div>
-          <h3 className="text-lg font-semibold text-red-700 dark:text-red-300 mb-2">Error</h3>
-          <p className="text-red-600 dark:text-red-300">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-          >
-            Try Again
-          </button>
-        </div>
+        <ErrorCard
+          title={"Failed to load polls"}
+          message={error}
+          onDismiss={() => {
+            window.location.reload();
+          }}
+        />
       )}
 
       {/* Poll Grid */}
