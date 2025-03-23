@@ -30,6 +30,7 @@ export default function ActivePollsPage() {
       setError: setError,
       setPolls: setPolls,
       setHasMore: setHasMore,
+      url: "/polls/active",
     });
   }, [page, selectedCategory]);
 

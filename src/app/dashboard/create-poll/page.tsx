@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { FormInput } from "@/components/formInput";
-
+import { categories } from "@/state/pollState";
 import { useAuth } from "@/context/AuthContext";
 import { Plus, Minus, Tag, Clock } from "lucide-react";
 
@@ -16,7 +16,7 @@ type PollOption = {
 type FormData = {
   title: string;
   category: string;
-  expiresAt: number;
+  expiresAt: number | string;
   options: PollOption[];
   description: string;
   userID: string;
@@ -29,22 +29,6 @@ type FormErrors = {
   options?: string | null;
   description?: string | null;
 };
-
-const categories = [
-  "Politics",
-  "Gaming",
-  "Movies",
-  "Technology",
-  "Sports",
-  "Music",
-  "Food",
-  "Travel",
-  "Fashion",
-  "Health",
-  "Education",
-  "Business",
-  "Other",
-];
 
 export default function CreatePollForm() {
   const router = useRouter();
@@ -165,6 +149,7 @@ export default function CreatePollForm() {
 
     try {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+      formData.expiresAt = formData.expiresAt.toString();
       const response = await fetch(`${baseUrl}/polls`, {
         method: "POST",
         headers: {

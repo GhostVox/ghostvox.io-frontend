@@ -30,6 +30,7 @@ export default function FinishedPollsPage() {
       setHasMore,
       setPolls,
       setError,
+      url: "/polls/finished",
     });
   }, [page, selectedCategory]);
 

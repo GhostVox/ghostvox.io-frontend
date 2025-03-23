@@ -6,6 +6,7 @@ type FetchPollsParams<T> = {
   setHasMore: (hasMore: boolean) => void;
   setPolls: (polls: T[] | ((prev: T[]) => T[])) => void;
   setError: (error: string | null) => void;
+  url: string;
 };
 
 export async function FetchPolls<T>(params: FetchPollsParams<T>) {
@@ -15,7 +16,7 @@ export async function FetchPolls<T>(params: FetchPollsParams<T>) {
     const offset = (params.page - 1) * LIMIT;
 
     // Build query parameters
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/polls/finished?limit=${LIMIT}&offset=${offset}`;
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/${params.url}?limit=${LIMIT}&offset=${offset}`;
 
     // Add category filter if selected
     if (params.selectedCategory !== "All Categories") {
