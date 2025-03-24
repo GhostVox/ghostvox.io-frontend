@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { parseToken } from "@/utils/parseTokenClient";
+import { parseToken } from "@/utils/parseToken";
 import { GithubLoginButton } from "@/components/buttons/githubLogin";
 import { GoogleLoginButton } from "@/components/buttons/googleLogin";
 

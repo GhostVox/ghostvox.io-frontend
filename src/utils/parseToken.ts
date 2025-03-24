@@ -4,8 +4,8 @@ import { User } from "@/types/user";
 export async function parseToken(token: string): Promise<User> {
   const parts: string[] = token.split(".");
   if (parts.length !== 3) throw new Error("Invalid token");
-
-  const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf8"));
+  const buf = Buffer.from(parts[1], "base64");
+  const payload = JSON.parse(buf.toString("utf8"));
 
   const user: User = {
     id: payload.sub,
