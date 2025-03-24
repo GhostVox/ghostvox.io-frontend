@@ -1,5 +1,5 @@
 "use client";
-import { FormInput } from "@/components/formInput";
+import { FormInput } from "@/components/ui/formInput";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

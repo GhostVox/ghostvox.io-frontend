@@ -1,4 +1,4 @@
-import { Card, CardContent } from "../card";
+import { Card, CardContent } from "@/components/ui/card";
 import { BarChart2, Users, Bell } from "lucide-react";
 
 const userStats = {

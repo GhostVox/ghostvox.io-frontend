@@ -2,7 +2,7 @@
 import { Nosifer } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
-import NavButtons from "@/components/navButtons";
+import NavButtons from "@/components/buttons/navButtons";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";

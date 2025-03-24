@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PollVisualization } from "@/components/poll-visual";
+import { PollVisualization } from "@/components/homepage/poll-visual";
 import Link from "next/link";
 
 export const DataVisual = () => {
