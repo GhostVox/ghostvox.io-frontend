@@ -60,7 +60,7 @@ export default function FinishedPollsPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 pt-16 lg:pt-6 transition-all duration-300">
+    <div className="max-w-7xl mx-6 p-6 pt-16 lg:pt-6 transition-all duration-300 flex flex-col grow">
       <Header title="Finished Polls" description="Explore all finished polls." />
 
       <SearchBar

@@ -4,7 +4,7 @@ import { Clock } from "lucide-react";
 import { OptionSection } from "./optionSection";
 export function ActivePollCard({ poll }: { poll: ActivePoll }) {
   return (
-    <Card key={poll.id} className="overflow-hidden transition-all hover:shadow-md">
+    <Card key={poll.id} className="overflow-hidden transition-all hover:shadow-md ">
       <CardHeader className="p-4">
         <div className="flex justify-between items-start mb-2">
           <span className="text-xs font-medium px-2.5 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">

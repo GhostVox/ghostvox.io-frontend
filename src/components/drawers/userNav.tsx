@@ -11,7 +11,7 @@ export function UserNav({
   handleLogout: () => Promise<void>;
 }) {
   return (
-    <div className="mt-auto p-4 border-t dark:border-gray-700">
+    <div className="mt-auto p-4 border-t dark:border-gray-700 sm:h-screen">
       <ul className="space-y-1">
         <li>
           <Link

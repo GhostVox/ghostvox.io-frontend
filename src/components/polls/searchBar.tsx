@@ -1,5 +1,5 @@
 import { Search, Filter, BarChart2 } from "lucide-react";
-import { Card } from "../card";
+import { Card } from "@/components/ui/card";
 import { CardContent } from "../ui/card";
 import { categories, sortOptions } from "@/state/pollState";
 export function SearchBar({
