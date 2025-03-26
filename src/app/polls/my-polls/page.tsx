@@ -42,19 +42,22 @@ export default function MyPollsPage() {
       setHasMore,
       setPolls,
       setError,
-      url: `/polls/${user.id}`,
+      url: `/polls/by-user/${user.id}`,
     });
   }, [page, selectedCategory, tabView, user?.id]);
+  // After fetching in useEffect
+  const filteredByTabPolls =
+    tabView === Selection.All ? polls : polls.filter((poll) => poll.status === tabView);
 
-  // Apply client-side filtering based on search query
-  const filteredPolls = filterPolls(polls, searchQuery);
+  // Then apply search filtering to the tab-filtered polls
+  const filteredPolls = filterPolls(filteredByTabPolls, searchQuery);
 
   // Apply client-side sorting
   const sortedPolls = sortPolls(sortBy, filteredPolls);
 
   // Check if poll is active or finished
   const isPollActive = (poll: MyPoll): poll is ActivePoll => {
-    return "daysLeft" in poll;
+    return poll.status === "Active";
   };
 
   // Event handlers for filters

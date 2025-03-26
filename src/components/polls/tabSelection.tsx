@@ -1,7 +1,7 @@
 export enum Selection {
   All = "all",
-  Active = "active",
-  Finished = "finished",
+  Active = "Active",
+  Finished = "Archived",
 }
 
 export function TabSelection({

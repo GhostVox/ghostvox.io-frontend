@@ -13,6 +13,7 @@ export interface Poll {
   creator: string;
   description: string;
   category: string;
+  status: "Active" | "Archived";
   options: PollOption[];
   votes: number;
   comments: number;
