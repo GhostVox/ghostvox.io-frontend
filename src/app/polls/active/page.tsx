@@ -9,7 +9,7 @@ import { SearchBar } from "@/components/polls/searchBar";
 import { Loading } from "@/components/polls/loading";
 import { LoadMorePolls } from "@/components/polls/loadMorePolls";
 import { NoPollsFound } from "@/components/polls/noPollsFound";
-import { ActivePollCard } from "@/components/polls/activePollCard";
+import { ActivePollCard } from "@/components/polls/activePollCardPreview";
 
 export default function ActivePollsPage() {
   // State hooks for the component

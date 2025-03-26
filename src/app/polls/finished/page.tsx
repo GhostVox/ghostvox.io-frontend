@@ -9,7 +9,7 @@ import { Header } from "@/components/polls/header";
 import { Loading } from "@/components/polls/loading";
 import { LoadMorePolls } from "@/components/polls/loadMorePolls";
 import { NoPollsFound } from "@/components/polls/noPollsFound";
-import { FinishedPollCard } from "@/components/polls/finishedPollCard";
+import { FinishedPollCard } from "@/components/polls/finishedPollCardPrewview";
 
 export default function FinishedPollsPage() {
   // State hooks for the component

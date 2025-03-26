@@ -13,8 +13,8 @@ import { SearchBar } from "@/components/polls/searchBar";
 import { Header } from "@/components/polls/header";
 import { TabSelection, Selection } from "@/components/polls/tabSelection";
 import { FetchPolls } from "@/hooks/fetchPolls";
-import { ActivePollCard } from "@/components/polls/activePollCard";
-import { FinishedPollCard } from "@/components/polls/finishedPollCard";
+import { ActivePollCard } from "@/components/polls/activePollCardPreview";
+import { FinishedPollCard } from "@/components/polls/finishedPollCardPrewview";
 
 export default function MyPollsPage() {
   const { user } = useAuth();
