@@ -15,9 +15,10 @@ import { TabSelection, Selection } from "@/components/polls/tabSelection";
 import { FetchPolls } from "@/hooks/fetchPolls";
 import { ActivePollCard } from "@/components/polls/activePollCardPreview";
 import { FinishedPollCard } from "@/components/polls/finishedPollCardPrewview";
-
+import { useUsersPollsCtx } from "@/context/usersPollsCtx";
 export default function MyPollsPage() {
   const { user } = useAuth();
+  const { usersPolls, setUsersPolls } = useUsersPollsCtx();
 
   // State hooks for the component
   const [polls, setPolls] = useState<MyPoll[]>([]);
@@ -34,6 +35,9 @@ export default function MyPollsPage() {
 
   useEffect(() => {
     if (!user?.id) return;
+    if (usersPolls.get(page) != undefined && usersPolls.get(page)?.length != 0){
+      setPolls(usersPolls.get(page) || []);
+      return;
 
     FetchPolls<MyPoll>({
       page,
@@ -42,9 +46,11 @@ export default function MyPollsPage() {
       setHasMore,
       setPolls,
       setError,
+      setUsersPolls,
       url: `/polls/by-user/${user.id}`,
     });
-  }, [page, selectedCategory, tabView, user?.id]);
+  }, [page, selectedCategory, setUsersPolls, tabView, user?.id, usersPolls]);
+
   // After fetching in useEffect
   const filteredByTabPolls =
     tabView === Selection.All ? polls : polls.filter((poll) => poll.status === tabView);

@@ -1,6 +1,6 @@
 import { PollOption } from "@/types/polls";
 import { BarChart2, MessageSquare } from "lucide-react";
-import Link from "next/link";
+import { VoteButton } from "./voteButton";
 export function OptionSection<
   T extends {
     options: PollOption[];
@@ -46,11 +46,7 @@ export function OptionSection<
             <span>{poll.comments} comments</span>
           </div>
         </div>
-        <Link href={`/polls/${poll.id}`}>
-          <button className="px-4 py-1 text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-md hover:from-purple-700 hover:to-indigo-700 transition-colors">
-            Vote
-          </button>
-        </Link>
+        <VoteButton poll={poll} />
       </div>
     </div>
   );

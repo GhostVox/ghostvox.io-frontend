@@ -6,6 +6,9 @@ type FetchPollsParams<T> = {
   setHasMore: (hasMore: boolean) => void;
   setPolls: (polls: T[] | ((prev: T[]) => T[])) => void;
   setError: (error: string | null) => void;
+  setUsersPolls: (
+    polls: Map<number, T[]> | ((prev: Map<number, T[]>) => Map<number, T[]>),
+  ) => void | null;
   url: string;
 };
 
@@ -33,6 +36,15 @@ export async function FetchPolls<T>(params: FetchPollsParams<T>) {
     if (!data) {
       return;
     }
+    // Check if setUsersPolls is defined if it is then we need to store user's polls
+    if (params.setUsersPolls) {
+      params.setUsersPolls((prev: Map<number, T[]>) => {
+        const newMap = new Map(prev);
+        newMap.set(params.page, data);
+        return newMap;
+      });
+    }
+
     // If we got fewer results than limit, we've reached the end
     if (data.length < LIMIT) {
       params.setHasMore(false);
