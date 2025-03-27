@@ -1,6 +1,13 @@
 import { PollOption } from "@/types/polls";
 import { BarChart2, MessageSquare } from "lucide-react";
-import { VoteButton } from "./voteButton";
+import Link from "next/link";
+import { calculatePercentage } from "@/utils/polls";
+
+interface OptionSectionProps<T> {
+  poll: T;
+  isDetailView?: boolean;
+}
+
 export function OptionSection<
   T extends {
     options: PollOption[];
@@ -8,34 +15,44 @@ export function OptionSection<
     winner?: string;
     comments?: number;
     id: string;
+    userVoted?: string | null;
   },
->({ poll }: { poll: T }) {
+>({ poll, isDetailView = false }: OptionSectionProps<T>) {
   return (
     <div className="mt-2 mb-4 space-y-2">
-      {poll.options.slice(0, 3).map((option) => (
+      {/* Show all options in detail view, otherwise show just the first 3 */}
+      {(isDetailView ? poll.options : poll.options.slice(0, 3)).map((option) => (
         <div key={option.ID} className="space-y-1">
           <div className="flex justify-between text-xs">
-            <span className="font-medium">{option.Name}</span>
+            <span className="font-medium">
+              {option.Name}
+              {poll.userVoted === option.ID && isDetailView && (
+                <span className="ml-2 text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 px-2 py-0.5 rounded-full">
+                  Your vote
+                </span>
+              )}
+            </span>
             <span className="text-gray-500">
-              {poll.votes > 0 ? Math.round(((option.votes || 0) / poll.votes) * 100) : 0}%
+              {isDetailView ? `${option.votes} votes - ` : ""}
+              {calculatePercentage(option.votes || 0, poll.votes).toFixed(1)}%
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
             <div
-              className={`h-full ${option.ID === poll.winner ? "bg-green-500" : "bg-gradient-to-r from-purple-500 to-indigo-600"} transition-all duration-500`}
+              className={`h-full ${option.ID === poll.winner ? "bg-green-500" : poll.userVoted === option.ID ? "bg-gradient-to-r from-purple-600 to-indigo-600" : "bg-gradient-to-r from-purple-500 to-indigo-500 opacity-70"} transition-all duration-500`}
               style={{
-                width: `${poll.votes > 0 ? ((option.votes || 0) / poll.votes) * 100 : 0}%`,
+                width: `${calculatePercentage(option.votes || 0, poll.votes)}%`,
               }}
             />
           </div>
         </div>
       ))}
-      {poll.options.length > 3 && (
+      {!isDetailView && poll.options.length > 3 && (
         <div className="text-xs text-purple-600 dark:text-purple-400">
           + {poll.options.length - 3} more options
         </div>
       )}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-4">
         <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center">
             <BarChart2 className="h-4 w-4 mr-1" />
@@ -46,7 +63,13 @@ export function OptionSection<
             <span>{poll.comments} comments</span>
           </div>
         </div>
-        <VoteButton poll={poll} />
+        {!isDetailView && (
+          <Link href={`/polls/${poll.id}`}>
+            <button className="px-4 py-1 text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-md hover:from-purple-700 hover:to-indigo-700 transition-colors">
+              {poll.userVoted ? "View Results" : "Vote"}
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

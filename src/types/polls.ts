@@ -18,6 +18,7 @@ export interface Poll {
   votes: number;
   comments: number;
   expiresAt: string;
+  userVoted?: string | null;
 }
 
 export interface FinishedPoll extends Poll {
@@ -27,6 +28,7 @@ export interface FinishedPoll extends Poll {
 
 export interface ActivePoll extends Poll {
   daysLeft: number;
+  winner: boolean;
 }
 
 export type MyPoll = FinishedPoll | ActivePoll;

@@ -1,4 +1,4 @@
-import { Poll } from "@/types/polls";
+import { Poll, MyPoll } from "@/types/polls";
 
 export function sortPolls<
   T extends { endedAt?: string | Date; expiresAt?: string | Date; votes: number; comments: number },
@@ -36,4 +36,27 @@ export function filterPolls<T extends Poll>(polls: T[], searchQuery: string): T[
   });
 
   return filteredPolls;
+}
+
+// Calculate percentage for an option
+export function calculatePercentage(votes: number, totalVotes: number): number {
+  if (!totalVotes) return 0;
+  return (votes / totalVotes) * 100;
+}
+
+// Get bar color based on status and selection
+export function getBarColor(optionId: string, poll: MyPoll): string {
+  const isActive = poll.status === "Active";
+  const isWinner = poll.winner === optionId;
+  const isUserVote = poll.userVoted === optionId;
+
+  if (!isActive && isWinner) {
+    return "bg-green-500";
+  }
+
+  if (isUserVote) {
+    return "bg-gradient-to-r from-purple-600 to-indigo-600";
+  }
+
+  return "bg-gradient-to-r from-purple-500 to-indigo-500 opacity-70";
 }

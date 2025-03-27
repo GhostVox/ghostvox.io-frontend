@@ -35,9 +35,10 @@ export default function MyPollsPage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    if (usersPolls.get(page) != undefined && usersPolls.get(page)?.length != 0){
+    if (usersPolls.get(page) != undefined && usersPolls.get(page)?.length != 0) {
       setPolls(usersPolls.get(page) || []);
       return;
+    }
 
     FetchPolls<MyPoll>({
       page,
