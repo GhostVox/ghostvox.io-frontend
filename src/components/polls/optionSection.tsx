@@ -1,7 +1,7 @@
-import { PollOption } from "@/types/polls";
 import { BarChart2, MessageSquare } from "lucide-react";
-import Link from "next/link";
 import { calculatePercentage } from "@/utils/polls";
+import { VoteButton } from "./voteButton";
+import { PollOption } from "@/types/polls";
 
 interface OptionSectionProps<T> {
   poll: T;
@@ -16,6 +16,7 @@ export function OptionSection<
     comments?: number;
     id: string;
     userVoted?: string | null;
+    status?: string;
   },
 >({ poll, isDetailView = false }: OptionSectionProps<T>) {
   return (
@@ -33,15 +34,15 @@ export function OptionSection<
               )}
             </span>
             <span className="text-gray-500">
-              {isDetailView ? `${option.votes} votes - ` : ""}
-              {calculatePercentage(option.votes || 0, poll.votes).toFixed(1)}%
+              {isDetailView ? `${option.Count} votes - ` : ""}
+              {calculatePercentage(option.Count || 0, poll.votes).toFixed(1)}%
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
             <div
               className={`h-full ${option.ID === poll.winner ? "bg-green-500" : poll.userVoted === option.ID ? "bg-gradient-to-r from-purple-600 to-indigo-600" : "bg-gradient-to-r from-purple-500 to-indigo-500 opacity-70"} transition-all duration-500`}
               style={{
-                width: `${calculatePercentage(option.votes || 0, poll.votes)}%`,
+                width: `${calculatePercentage(option.Count || 0, poll.votes)}%`,
               }}
             />
           </div>
@@ -64,11 +65,7 @@ export function OptionSection<
           </div>
         </div>
         {!isDetailView && (
-          <Link href={`/polls/${poll.id}`}>
-            <button className="px-4 py-1 text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-md hover:from-purple-700 hover:to-indigo-700 transition-colors">
-              {poll.userVoted ? "View Results" : "Vote"}
-            </button>
-          </Link>
+          <VoteButton poll={poll} text={poll.userVoted ? "View Results" : "Vote"} />
         )}
       </div>
     </div>

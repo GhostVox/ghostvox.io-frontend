@@ -4,9 +4,14 @@ export interface PollOption {
   CreatedAt: string;
   UpdatedAt: string;
   PollID: string;
-  votes?: number;
+  Count: number;
 }
-
+interface PollVote {
+  ID: string;
+  UserID: string;
+  PollID: string;
+  OptionID: string;
+}
 export interface Poll {
   id: string;
   title: string;
@@ -18,7 +23,7 @@ export interface Poll {
   votes: number;
   comments: number;
   expiresAt: string;
-  userVoted?: string | null;
+  userVote: PollVote | null;
 }
 
 export interface FinishedPoll extends Poll {

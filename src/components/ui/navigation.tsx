@@ -19,7 +19,7 @@ export const Navigation = () => {
 
   // Check if we're on a dashboard page
   const showNavigation =
-    pathname?.endsWith("/") || pathname?.startsWith("/sign-up") || pathname?.startsWith("/login");
+    pathname?.endsWith("/") || pathname?.startsWith("/sign-up") || pathname?.startsWith("/sign-in");
 
   // Handle scroll events to add background when scrolled
   useEffect(() => {

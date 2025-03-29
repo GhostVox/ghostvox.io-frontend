@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FormInput } from "@/components/formInput";
+import { FormInput } from "@/components/ui/formInput";
 import { categories } from "@/state/pollState";
 import { useAuth } from "@/context/AuthContext";
 import { Plus, Minus, Tag, Clock } from "lucide-react";
+import { getSession } from "@/utils/getSession";
+import ErrorCard from "@/components/cards/errorCard";
 
 type PollOption = {
   id: number;
@@ -28,6 +30,7 @@ type FormErrors = {
   expiresAt?: string | null;
   options?: string | null;
   description?: string | null;
+  error?: string | null;
 };
 
 export default function CreatePollForm() {
@@ -119,7 +122,7 @@ export default function CreatePollForm() {
       isValid = false;
     }
 
-    if (formData.expiresAt < 1) {
+    if (Number(formData.expiresAt) < 1) {
       newErrors.expiresAt = "Duration must be at least 1 day";
       isValid = false;
     }
@@ -152,6 +155,7 @@ export default function CreatePollForm() {
       formData.expiresAt = formData.expiresAt.toString();
       const response = await fetch(`${baseUrl}/polls`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -159,7 +163,11 @@ export default function CreatePollForm() {
       });
       console.log("Poll created:", formData);
       if (!response.ok) {
-        throw new Error("Failed to create poll");
+        const data = await response.json();
+        if (data.errors.accessToken) {
+          getSession();
+        }
+        throw new Error(data.errors || "Failed to create poll");
       }
       // Redirect to the dashboard or polls page
       router.push("/dashboard");
@@ -167,7 +175,7 @@ export default function CreatePollForm() {
       console.error("Error creating poll:", error);
       setErrors((prev) => ({
         ...prev,
-        question: "Failed to create poll. Please try again.",
+        error: "Failed to create poll. Please try again.",
       }));
     } finally {
       setIsLoading(false);
@@ -176,6 +184,9 @@ export default function CreatePollForm() {
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
+      {errors.error && (
+        <ErrorCard message={errors.error} onDismiss={() => setErrors({ ...errors, error: null })} />
+      )}
       <Card>
         <CardHeader className="bg-gradient-to-r from-purple-700 to-blue-700 text-white">
           <CardTitle className="text-2xl">Create a New Poll</CardTitle>

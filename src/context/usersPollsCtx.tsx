@@ -1,3 +1,4 @@
+"use client";
 import { MyPoll } from "@/types/polls";
 import { createContext, useContext, useState } from "react";
 

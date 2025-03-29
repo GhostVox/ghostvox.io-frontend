@@ -26,7 +26,13 @@ export async function FetchPolls<T>(params: FetchPollsParams<T>) {
       url += `&category=${encodeURIComponent(params.selectedCategory)}`;
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch polls");

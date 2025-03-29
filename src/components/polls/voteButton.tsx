@@ -10,7 +10,7 @@ export function VoteButton<
     comments?: number;
     id: string;
   },
->({ poll }: { poll: T }) {
+>({ poll, text }: { poll: T; text: string }) {
   const pollCtx = useCurrentPoll();
 
   const handleclick = () => {
@@ -23,7 +23,7 @@ export function VoteButton<
       className="px-4 py-1 text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-md hover:from-purple-700 hover:to-indigo-700 transition-colors"
       onClick={handleclick}
     >
-      Vote
+      {text}
     </button>
   );
 }

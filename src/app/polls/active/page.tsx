@@ -32,6 +32,7 @@ export default function ActivePollsPage() {
       setPolls: setPolls,
       setHasMore: setHasMore,
       url: "/polls/active",
+      setUsersPolls: () => {}, // Add missing required property
     });
   }, [page, selectedCategory]);
 

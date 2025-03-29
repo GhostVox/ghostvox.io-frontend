@@ -31,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 w-screen h-screen overflow-y-scroll overflow-x-hidden  `}
       >
-        <AuthCtxProvider>
-          <Navigation />
-          {children}
-          <Footer />
-        </AuthCtxProvider>
+        <div className="flex w-full flex-col pt-20 ">
+          <AuthCtxProvider>
+            <Navigation />
+            {children}
+            <Footer />
+          </AuthCtxProvider>
+        </div>
       </body>
     </html>
   );

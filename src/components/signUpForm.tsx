@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { parseToken } from "@/utils/parseToken";
 import { GithubLoginButton } from "./buttons/githubLogin";
 import { GoogleLoginButton } from "./buttons/googleLogin";
-import { FormInput } from "@/components/formInput";
+import { FormInput } from "@/components/ui/formInput";
 
 type FormFields = {
   firstName: string;

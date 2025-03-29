@@ -37,6 +37,12 @@ export default function MyPollsPage() {
     if (!user?.id) return;
     if (usersPolls.get(page) != undefined && usersPolls.get(page)?.length != 0) {
       setPolls(usersPolls.get(page) || []);
+      setLoading(false);
+      if (usersPolls.size > 1) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
       return;
     }
 
@@ -48,7 +54,7 @@ export default function MyPollsPage() {
       setPolls,
       setError,
       setUsersPolls,
-      url: `/polls/by-user/${user.id}`,
+      url: `/users/${user.id}/polls`,
     });
   }, [page, selectedCategory, setUsersPolls, tabView, user?.id, usersPolls]);
 

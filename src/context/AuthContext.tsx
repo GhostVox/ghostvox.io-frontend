@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types/user";
 import { getSession } from "@/utils/getSession";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 // 1. Define the context type
 type UserCtxType = {
@@ -25,11 +25,12 @@ export function useAuth() {
 export function AuthCtxProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const path = usePathname();
   useEffect(() => {
     if (user !== null) {
       return;
     }
+
     async function loadUserFromCookie() {
       try {
         const userData = await getSession();
@@ -38,13 +39,15 @@ export function AuthCtxProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (error) {
         console.error("Error loading user from cookie:", error);
-        redirect("/sign-in");
+        if (path !== "/sign-in" && path !== "/sign-up" && path !== "/") {
+          redirect("/sign-in");
+        }
       } finally {
         setLoading(false);
       }
     }
     loadUserFromCookie();
-  }, [setUser, user]);
+  }, [setUser, user, path]);
 
   const value = {
     user,

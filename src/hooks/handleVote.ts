@@ -47,7 +47,7 @@ export async function handleVote(voteRequest: voteRequest<MyPoll>) {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ optionId: optionId, userId: user.id, pollId: poll?.id }),
+      body: JSON.stringify({ optionId: optionId, userId: user.id, pollId: poll?.id, poll }),
     });
 
     if (!response.ok) {
@@ -63,18 +63,21 @@ export async function handleVote(voteRequest: voteRequest<MyPoll>) {
       return { ...prev, votes: updatedPoll.votes };
     });
 
-    setUsersPolls((prev) => {
-      const newMap = new Map(prev); // Create a copy of the previous Map
-      const updatedPolls = [...(newMap.get(page) || [])]; // Get a copy of the polls for this page
-      const index = updatedPolls.findIndex((p) => p.id === poll?.id);
+    // check for page, if it is not null then user came from their poll's page and we need to update their poll context else they came from active  polls page to vote.
+    if (page) {
+      setUsersPolls((prev) => {
+        const newMap = new Map(prev); // Create a copy of the previous Map
+        const updatedPolls = [...(newMap.get(page) || [])]; // Get a copy of the polls for this page
+        const index = updatedPolls.findIndex((p) => p.id === poll?.id);
 
-      if (index !== -1) {
-        updatedPolls[index] = updatedPoll; // Update the specific poll
-        newMap.set(page, updatedPolls); // Set the updated polls for this page
-      }
+        if (index !== -1) {
+          updatedPolls[index] = updatedPoll; // Update the specific poll
+          newMap.set(page, updatedPolls); // Set the updated polls for this page
+        }
 
-      return newMap; // Return the updated Map
-    });
+        return newMap; // Return the updated Map
+      });
+    }
 
     // Reset success message after 3 seconds
     setTimeout(() => {

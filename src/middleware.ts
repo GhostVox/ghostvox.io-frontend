@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("accessToken");
   // Check if the user is trying to access protected routes
   const isProtectedRoute = !notProtectedRoutes.includes(request.nextUrl.pathname);
-
+  console.log(request.nextUrl.pathname);
   // If accessing protected routes without tokens, redirect to sign-in
   if (isProtectedRoute && !refreshToken?.value && !accessToken?.value) {
     return NextResponse.redirect(new URL("/sign-in", request.url));

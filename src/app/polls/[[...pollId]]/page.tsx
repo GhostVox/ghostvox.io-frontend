@@ -1,5 +1,4 @@
 "use client";
-import { useCurrentPoll } from "@/context/currentPollContext";
 import { useUsersPollsCtx } from "@/context/usersPollsCtx";
 import { MyPoll, ActivePoll, FinishedPoll } from "@/types/polls";
 import { useState, useEffect } from "react";
@@ -14,15 +13,14 @@ import { ActivePollCard } from "@/components/polls/activePollCardPreview";
 import { FinishedPollCard } from "@/components/polls/finishedPollCardPrewview";
 
 export default function PollDetailPage() {
-  const { poll: pollData } = useCurrentPoll();
   const { usersPolls, setUsersPolls } = useUsersPollsCtx();
   const { user } = useAuth();
   const router = useRouter();
-  const { page } = useParams();
+  const { page, pollId } = useParams();
 
   const [error, setError] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [poll, setPoll] = useState<MyPoll | null>(pollData);
+  const [poll, setPoll] = useState<MyPoll | null>(null);
   const [votingLoading, setVotingLoading] = useState(false);
   const [voteSuccess, setVoteSuccess] = useState(false);
 
@@ -30,23 +28,44 @@ export default function PollDetailPage() {
 
   // Set the selected option based on user's previous vote (if any)
   useEffect(() => {
-    if (poll?.userVoted) {
-      const votedOption = poll.options.find((option) => option.ID === poll.userVoted);
-      if (votedOption) {
-        setSelectedOption(votedOption.ID);
+    const url = ` ${process.env.NEXT_PUBLIC_API_URL}/polls/${pollId}`;
+    const fetchPollData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.errors || "Failed to fetch poll data");
+          return;
+        }
+
+        const data = await response.json();
+        setPoll(data.poll);
+      } catch (e) {
+        console.log(e);
+        setError("Failed to fetch poll data ");
+        return;
       }
-    }
-  }, [poll]);
+    };
+
+    fetchPollData();
+  }, [pollId]);
 
   // Handle vote submission
   const submitVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const optionId = selectedOption;
-    if (!optionId) return;
+    const option = poll?.options.find((option) => option.ID === selectedOption);
+    if (!option?.ID) return;
 
     const request: voteRequest<MyPoll> = {
-      optionId: optionId,
+      optionId: option.ID,
       page: Number(page) || 1,
       user: user,
       poll: poll,

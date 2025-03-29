@@ -20,7 +20,7 @@ export function ActivePollCard({
   setSelectedOption,
   votingLoading = false,
 }: ActivePollCardProps) {
-  const hasVoted = poll?.userVoted !== null;
+  const hasVoted = poll?.userVote;
 
   return (
     <Card
@@ -40,7 +40,11 @@ export function ActivePollCard({
             <Clock className={`h-3 w-3 mr-1 ${isDetailView ? "text-white/80" : ""}`} />
             {poll.daysLeft >= 0 ? (
               <span className={isDetailView ? "text-white/80" : ""}>
-                {poll.daysLeft} {poll.daysLeft === 1 ? "day" : "days"} left
+                {poll.daysLeft > 0
+                  ? poll.daysLeft === 1
+                    ? "1 day"
+                    : `${poll.daysLeft} days`
+                  : "last day"}
               </span>
             ) : (
               <span className="text-amber-600">Expired</span>
@@ -97,7 +101,7 @@ export function ActivePollCard({
             <div className="mt-6">
               <button
                 onClick={onVote}
-                disabled={!selectedOption || votingLoading}
+                disabled={!selectedOption || votingLoading || hasVoted !== null}
                 className="w-full py-2 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {votingLoading ? "Submitting..." : "Submit Vote"}
