@@ -80,7 +80,11 @@ export default function PollComments({ pollId }: PollCommentsProps) {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ content: comment }),
+        body: JSON.stringify({
+          username: user.username,
+          content: comment,
+          userPicture: user.picture,
+        }),
       });
 
       if (!response.ok) {
@@ -89,8 +93,13 @@ export default function PollComments({ pollId }: PollCommentsProps) {
 
       // Add new comment to the list
       const newComment = await response.json();
-      setComments((prev) => [newComment, ...prev]);
-      setComment(""); // Clear comment input
+      if (comments.length >= 0) {
+        setComments((prev) => [newComment, ...prev]);
+        setComment(""); // Clear comment input
+      } else {
+        setComments([newComment]);
+        setComment("");
+      }
     } catch (err) {
       console.error("Error submitting comment:", err);
       setError("Failed to submit comment. Please try again.");
@@ -127,7 +136,7 @@ export default function PollComments({ pollId }: PollCommentsProps) {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               disabled={!user || commentLoading}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-20 disabled:bg-gray-100 disabled:text-gray-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-20 disabled:bg-gray-100 disabled:text-gray-500"
             />
           </div>
 
@@ -165,6 +174,8 @@ export default function PollComments({ pollId }: PollCommentsProps) {
                   <div className="flex-shrink-0 mr-3">
                     {comment.userPicture ? (
                       <Image
+                        width={40}
+                        height={40}
                         src={comment.userPicture}
                         alt={comment.username}
                         className="h-10 w-10 rounded-full object-cover"

@@ -6,7 +6,7 @@ export interface PollOption {
   PollID: string;
   Count: number;
 }
-interface PollVote {
+export interface PollVote {
   ID: string;
   UserID: string;
   PollID: string;

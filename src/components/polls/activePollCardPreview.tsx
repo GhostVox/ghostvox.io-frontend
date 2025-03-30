@@ -25,7 +25,7 @@ export function ActivePollCard({
   return (
     <Card
       key={poll.id}
-      className={`overflow-hidden transition-all hover:shadow-md ${isDetailView ? "shadow-lg" : ""}`}
+      className={` p-3 overflow-hidden transition-all hover:shadow-md ${isDetailView ? "shadow-lg" : ""}`}
     >
       <CardHeader
         className={`p-4 ${isDetailView ? "bg-gradient-to-r from-purple-700 to-blue-700 text-white" : ""}`}

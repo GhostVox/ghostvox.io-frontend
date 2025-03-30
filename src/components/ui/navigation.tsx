@@ -32,7 +32,7 @@ export const Navigation = () => {
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [showNavigation]);
-
+  console.log(showNavigation);
   // Don't render navigation on dashboard pages
   if (!showNavigation) {
     return null;

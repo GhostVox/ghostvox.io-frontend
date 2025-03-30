@@ -46,7 +46,8 @@ export default function PollDetailPage() {
         }
 
         const data = await response.json();
-        setPoll(data.poll);
+        setPoll(data);
+        setError(null);
       } catch (e) {
         console.log(e);
         setError("Failed to fetch poll data ");
@@ -102,7 +103,7 @@ export default function PollDetailPage() {
 
   if (error || !poll) {
     return (
-      <div className="max-w-4xl mx-auto p-6 pt-16 lg:pt-6">
+      <div className="max-w-4xl w-full mx-auto flex flex-col items-center p-6 pt-16 lg:pt-6">
         <ErrorCard
           title="Failed to load poll"
           message={error || "Poll not found"}
@@ -116,7 +117,7 @@ export default function PollDetailPage() {
     <div className="max-w-4xl mx-auto p-6 pt-16 lg:pt-6 space-y-8">
       {/* Back button */}
       <div className="flex justify-between items-center">
-        <Link href="/polls/active">
+        <Link href={poll.status === "Active" ? "/polls/active" : "/polls/finished"}>
           <button className="flex items-center text-purple-600 dark:text-purple-400 hover:underline">
             <ChevronLeft className="h-4 w-4 mr-1" />
             Back to Polls

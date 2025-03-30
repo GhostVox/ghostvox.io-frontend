@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 w-screen h-screen overflow-y-scroll overflow-x-hidden  `}
       >
-        <div className="flex w-full flex-col pt-20 ">
+        <div className="flex w-full flex-col ">
           <AuthCtxProvider>
             <Navigation />
             {children}

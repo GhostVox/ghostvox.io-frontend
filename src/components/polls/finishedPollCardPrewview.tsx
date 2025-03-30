@@ -13,7 +13,7 @@ export function FinishedPollCard({ poll, isDetailView = false }: FinishedPollCar
   return (
     <Card
       key={poll.id}
-      className={`overflow-hidden transition-all hover:shadow-md ${isDetailView ? "shadow-lg" : ""}`}
+      className={` p-3 overflow-hidden transition-all hover:shadow-md ${isDetailView ? "shadow-lg" : ""}`}
     >
       <CardHeader
         className={`p-4 ${isDetailView ? "bg-gradient-to-r from-purple-700 to-blue-700 text-white" : ""}`}
@@ -61,7 +61,7 @@ export function FinishedPollCard({ poll, isDetailView = false }: FinishedPollCar
                 <>
                   Winner: {poll.options.find((o) => o.ID === poll.winner)?.Name} (
                   {(
-                    ((poll.options.find((o) => o.ID === poll.winner)?.votes || 0) / poll.votes) *
+                    ((poll.options.find((o) => o.ID === poll.winner)?.Count || 0) / poll.votes) *
                     100
                   ).toFixed(1)}
                   %)
