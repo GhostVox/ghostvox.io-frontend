@@ -59,9 +59,9 @@ export function FinishedPollCard({ poll, isDetailView = false }: FinishedPollCar
                 "Result: Draw"
               ) : (
                 <>
-                  Winner: {poll.options.find((o) => o.ID === poll.winner)?.Name} (
+                  Winner: {poll.options.find((o) => o.id === poll.winner)?.name} (
                   {(
-                    ((poll.options.find((o) => o.ID === poll.winner)?.Count || 0) / poll.votes) *
+                    ((poll.options.find((o) => o.id === poll.winner)?.count || 0) / poll.votes) *
                     100
                   ).toFixed(1)}
                   %)

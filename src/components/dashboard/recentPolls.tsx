@@ -1,35 +1,27 @@
-import { ArrowRight, Clock, BarChart2, PlusCircle } from "lucide-react";
+"use client";
+import { ArrowRight, Clock, BarChart2, PlusCircle, CheckCircle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-
-const recentPolls = [
-  {
-    id: "poll-1",
-    question: "Which upcoming game are you most excited about?",
-    category: "Gaming",
-    votes: 1872,
-    comments: 143,
-    daysLeft: 3,
-  },
-  {
-    id: "poll-2",
-    question: "Should AI development be more strictly regulated?",
-    category: "Technology",
-    votes: 3241,
-    comments: 492,
-    daysLeft: 5,
-  },
-  {
-    id: "poll-3",
-    question: "What's the best streaming service in 2025?",
-    category: "Entertainment",
-    votes: 2156,
-    comments: 217,
-    daysLeft: 2,
-  },
-];
-
+import { useEffect, useState } from "react";
+import { MyPoll, ActivePoll } from "@/types/polls";
 export const RecentPolls = () => {
+  const [recentPolls, setRecentPolls] = useState<MyPoll[]>([]);
+  useEffect(() => {
+    const fetchRecentPolls = async () => {
+      const url = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${url}/polls/recent`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+      setRecentPolls(data);
+    };
+    fetchRecentPolls();
+  }, []);
+
   return (
     <div className="lg:col-span-2">
       <Card>
@@ -53,15 +45,33 @@ export const RecentPolls = () => {
                   <span className="text-xs font-medium px-2.5 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">
                     {poll.category}
                   </span>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="h-3 w-3 mr-1" />
-                    <span>
-                      {poll.daysLeft} {poll.daysLeft === 1 ? "day" : "days"} left
-                    </span>
-                  </div>
+                  {poll.status === "Active" && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      {poll.userVote == null ? (
+                        <>
+                          <Clock className="h-3 w-3 mr-1" />
+                          <span>
+                            {(poll as ActivePoll).daysLeft > 0
+                              ? (poll as ActivePoll).daysLeft === 1
+                                ? "day"
+                                : "days"
+                              : "Last Day to Vote"}{" "}
+                          </span>
+                        </>
+                      ) : (
+                        <span>Already Voted</span>
+                      )}
+                    </div>
+                  )}
+                  {poll.status === "Archived" && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      <span>Finished</span>
+                    </div>
+                  )}
                 </div>
                 <h3 className="font-semibold text-gray-800 dark:text-white mb-2">
-                  {poll.question}
+                  {poll.description}
                 </h3>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 space-x-4">
                   <div className="flex items-center">

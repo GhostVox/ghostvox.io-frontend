@@ -31,7 +31,7 @@ export default function FinishedPollsPage() {
       setHasMore,
       setPolls,
       setError,
-      url: "/polls/finished",
+      url: "polls/finished",
       setUsersPolls: () => {}, // Add missing required property
     });
   }, [page, selectedCategory]);

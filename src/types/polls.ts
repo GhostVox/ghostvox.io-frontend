@@ -1,10 +1,10 @@
 export interface PollOption {
-  ID: string;
-  Name: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  PollID: string;
-  Count: number;
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  poll_id: string;
+  count: number;
 }
 export interface PollVote {
   ID: string;

@@ -1,4 +1,4 @@
-import { Poll, MyPoll } from "@/types/polls";
+import { Poll, MyPoll, ActivePoll } from "@/types/polls";
 
 export function sortPolls<
   T extends { endedAt?: string | Date; expiresAt?: string | Date; votes: number; comments: number },
@@ -48,7 +48,7 @@ export function calculatePercentage(votes: number, totalVotes: number): number {
 export function getBarColor(optionId: string, poll: MyPoll): string {
   const isActive = poll.status === "Active";
   const isWinner = poll.winner === optionId;
-  const isUserVote = poll.userVoted === optionId;
+  const isUserVote = poll.userVote?.ID === optionId;
 
   if (!isActive && isWinner) {
     return "bg-green-500";
@@ -60,3 +60,7 @@ export function getBarColor(optionId: string, poll: MyPoll): string {
 
   return "bg-gradient-to-r from-purple-500 to-indigo-500 opacity-70";
 }
+
+export const isPollActive = (poll: MyPoll): poll is ActivePoll => {
+  return poll.status === "Active";
+};

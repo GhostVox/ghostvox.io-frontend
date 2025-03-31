@@ -62,11 +62,11 @@ export default function PollDetailPage() {
   const submitVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const option = poll?.options.find((option) => option.ID === selectedOption);
-    if (!option?.ID) return;
+    const option = poll?.options.find((option) => option.id === selectedOption);
+    if (!option?.id) return;
 
     const request: voteRequest<MyPoll> = {
-      optionId: option.ID,
+      optionId: option.id,
       page: Number(page) || 1,
       user: user,
       poll: poll,

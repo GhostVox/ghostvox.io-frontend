@@ -8,12 +8,20 @@ import { formatDistance } from "date-fns";
 import Image from "next/image";
 
 type Comment = {
-  id: string;
-  userId: string;
-  username: string;
-  userPicture: string | null;
-  content: string;
-  createdAt: string;
+  ID: string;
+  UserID: string;
+  PollID: string;
+  Content: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+  UserName: {
+    String: string;
+    Valid: boolean;
+  };
+  AvatarUrl?: {
+    String: string;
+    Valid: boolean;
+  };
 };
 
 interface PollCommentsProps {
@@ -31,7 +39,6 @@ export default function PollComments({ pollId }: PollCommentsProps) {
   // Fetch comments when component mounts or pollId changes
   useEffect(() => {
     async function fetchComments() {
-      setLoading(true);
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/polls/${pollId}/comments`,
@@ -43,7 +50,11 @@ export default function PollComments({ pollId }: PollCommentsProps) {
         }
 
         const data = await response.json();
-        setComments(data);
+        console.log("Comments data:", data);
+
+        // Make sure data is an array
+        const commentsArray = Array.isArray(data) ? data : [data];
+        setComments(commentsArray);
         setError(null);
       } catch (err) {
         console.error("Error fetching comments:", err);
@@ -81,9 +92,7 @@ export default function PollComments({ pollId }: PollCommentsProps) {
         },
         credentials: "include",
         body: JSON.stringify({
-          username: user.username,
           content: comment,
-          userPicture: user.picture,
         }),
       });
 
@@ -93,13 +102,8 @@ export default function PollComments({ pollId }: PollCommentsProps) {
 
       // Add new comment to the list
       const newComment = await response.json();
-      if (comments.length >= 0) {
-        setComments((prev) => [newComment, ...prev]);
-        setComment(""); // Clear comment input
-      } else {
-        setComments([newComment]);
-        setComment("");
-      }
+      setComments((prev) => [newComment, ...prev]);
+      setComment(""); // Clear comment input
     } catch (err) {
       console.error("Error submitting comment:", err);
       setError("Failed to submit comment. Please try again.");
@@ -118,12 +122,25 @@ export default function PollComments({ pollId }: PollCommentsProps) {
     }
   };
 
+  // Get display name for a comment
+  const getDisplayName = (comment: Comment) => {
+    return comment.UserName && comment.UserName?.String && comment.UserName.Valid
+      ? comment.UserName.String
+      : "Anonymous User";
+  };
+
+  // Get initial for avatar fallback
+  const getInitial = (comment: Comment) => {
+    const name = getDisplayName(comment);
+    return name === "Anonymous User" ? "A" : name.charAt(0).toUpperCase();
+  };
+
   return (
     <Card>
       <CardHeader className="bg-gray-50 dark:bg-gray-800">
         <CardTitle className="flex items-center text-xl">
           <MessageSquare className="h-5 w-5 mr-2" />
-          Discussion
+          Discussion ({comments.length})
         </CardTitle>
       </CardHeader>
 
@@ -164,38 +181,38 @@ export default function PollComments({ pollId }: PollCommentsProps) {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-700 mx-auto"></div>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading comments...</p>
             </div>
-          ) : comments.length > 0 ? (
+          ) : comments && comments.length > 0 ? (
             comments.map((comment) => (
               <div
-                key={comment.id}
+                key={comment.ID}
                 className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0"
               >
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mr-3">
-                    {comment.userPicture ? (
+                    {comment.AvatarUrl && comment.AvatarUrl.Valid && comment.AvatarUrl.String ? (
                       <Image
                         width={40}
                         height={40}
-                        src={comment.userPicture}
-                        alt={comment.username}
+                        src={comment.AvatarUrl.String}
+                        alt={getDisplayName(comment)}
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     ) : (
                       <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white font-semibold">
-                        {comment.username.charAt(0).toUpperCase()}
+                        {getInitial(comment)}
                       </div>
                     )}
                   </div>
                   <div className="flex-grow">
                     <div className="flex items-center">
                       <h4 className="font-medium text-gray-800 dark:text-white">
-                        {comment.username}
+                        {getDisplayName(comment)}
                       </h4>
                       <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
-                        {formatCommentTime(comment.createdAt)}
+                        {formatCommentTime(comment.CreatedAt)}
                       </span>
                     </div>
-                    <p className="mt-1 text-gray-700 dark:text-gray-300">{comment.content}</p>
+                    <p className="mt-1 text-gray-700 dark:text-gray-300">{comment.Content}</p>
                   </div>
                 </div>
               </div>
