@@ -51,7 +51,7 @@ export default function UsernameForm() {
       if (!response.ok) {
         const data = await response.json();
 
-        if (data.error && data.error.includes("username already taken")) {
+        if (data.errors && data.errors.Conflict) {
           setError("This username is already taken. Please choose another one.");
         } else {
           setError(data.error || "Failed to update username. Please try again.");

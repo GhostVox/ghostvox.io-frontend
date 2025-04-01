@@ -15,13 +15,6 @@ export async function middleware(request: NextRequest) {
   if (isProtectedRoute && !refreshToken?.value && !accessToken?.value) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
-
-  // Don't redirect from setup-username page even for users with incomplete profiles
-  if (request.nextUrl.pathname === "/setup-username") {
-    return NextResponse.next();
-  }
-
-  // Allow the request to proceed
   return NextResponse.next();
 }
 const notProtectedRoutes = ["/", "/sign-in", "/sign-up"];

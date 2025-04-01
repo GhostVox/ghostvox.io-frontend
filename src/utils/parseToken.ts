@@ -7,11 +7,13 @@ export async function parseToken(token: string): Promise<User> {
   const buf = Buffer.from(parts[1], "base64");
   const payload = JSON.parse(buf.toString("utf8"));
 
+  console.log("payload", payload);
+
   const user: User = {
     id: payload.sub,
     email: payload.email,
     firstName: payload.first_name,
-    username: payload.username || null,
+    username: payload.user_name || null,
     lastName: payload.last_name,
     picture: payload.picture_url,
     role: payload.role,
