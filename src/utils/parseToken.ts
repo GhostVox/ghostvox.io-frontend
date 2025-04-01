@@ -11,6 +11,7 @@ export async function parseToken(token: string): Promise<User> {
     id: payload.sub,
     email: payload.email,
     firstName: payload.first_name,
+    username: payload.username || null,
     lastName: payload.last_name,
     picture: payload.picture_url,
     role: payload.role,

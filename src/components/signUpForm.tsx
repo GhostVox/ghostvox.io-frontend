@@ -101,7 +101,7 @@ export default function SignUpForm() {
     try {
       const response = await fetch(`${baseURL}/auth/register`, {
         method: "POST",
-        credentials: "include", // Important for cookies
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -140,8 +140,8 @@ export default function SignUpForm() {
         setUser(user);
       }
 
-      // Successful signup, redirect
-      router.push("/dashboard");
+      // Successful signup, redirect to username setup instead of dashboard
+      router.push("/setup-username");
     } catch (error) {
       console.error("Registration error:", error);
       setErrors({

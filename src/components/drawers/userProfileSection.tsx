@@ -24,7 +24,12 @@ export function UserProfileSection({ user }: { user: User }) {
               user.lastName ||
               "User"}
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+          <div className="flex flex-col text-xs">
+            <span className="text-gray-500 dark:text-gray-400">{user.email}</span>
+            {user.username && (
+              <span className="text-purple-600 dark:text-purple-400">@{user.username}</span>
+            )}
+          </div>
         </div>
       </div>
     </div>

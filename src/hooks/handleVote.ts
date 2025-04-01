@@ -58,10 +58,11 @@ export async function handleVote(voteRequest: voteRequest<MyPoll>) {
     const updatedPoll = await response.json();
     setVoteSuccess(true);
 
-    setPoll((prev) => {
-      if (!prev) return updatedPoll;
-      return { ...prev, votes: updatedPoll.votes };
-    });
+    // setPoll((prev) => {
+    //   if (!prev) return updatedPoll;
+    //   return { ...prev, votes: updatedPoll.votes };
+    // });
+    setPoll(updatedPoll);
 
     // check for page, if it is not null then user came from their poll's page and we need to update their poll context else they came from active  polls page to vote.
     if (page) {

@@ -20,7 +20,7 @@ export function ActivePollCard({
   setSelectedOption,
   votingLoading = false,
 }: ActivePollCardProps) {
-  const hasVoted = poll?.userVote;
+  const hasVoted = () => poll?.userVote;
 
   return (
     <Card
@@ -78,19 +78,19 @@ export function ActivePollCard({
 
             <div className="space-y-4">
               {poll.options.map((option) => (
-                <div key={option.ID} className="space-y-2">
+                <div key={option.id} className="space-y-2">
                   <div className="flex items-center">
                     <label className="flex items-center w-full cursor-pointer">
                       <input
                         type="radio"
                         name="pollOption"
                         className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300"
-                        value={option.ID}
-                        checked={selectedOption === option.ID}
-                        onChange={() => setSelectedOption && setSelectedOption(option.ID)}
+                        value={option.id}
+                        checked={selectedOption === option.id}
+                        onChange={() => setSelectedOption && setSelectedOption(option.id)}
                       />
                       <span className="ml-2 flex-1 text-gray-800 dark:text-gray-200">
-                        {option.Name}
+                        {option.name}
                       </span>
                     </label>
                   </div>
@@ -101,7 +101,7 @@ export function ActivePollCard({
             <div className="mt-6">
               <button
                 onClick={onVote}
-                disabled={!selectedOption || votingLoading || hasVoted !== null}
+                disabled={!selectedOption || votingLoading || hasVoted}
                 className="w-full py-2 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {votingLoading ? "Submitting..." : "Submit Vote"}
