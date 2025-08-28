@@ -20,7 +20,7 @@ export function ActivePollCard({
   setSelectedOption,
   votingLoading = false,
 }: ActivePollCardProps) {
-  const hasVoted = () => poll?.userVote;
+  const hasVoted = poll?.userVote !== null;
 
   return (
     <Card

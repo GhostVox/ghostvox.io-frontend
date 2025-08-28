@@ -56,7 +56,7 @@ export default function PollDetailPage() {
     };
 
     fetchPollData();
-  }, [pollId]);
+  }, [pollId, voteSuccess]);
 
   // Handle vote submission
   const submitVote = (e: React.MouseEvent<HTMLButtonElement>) => {
