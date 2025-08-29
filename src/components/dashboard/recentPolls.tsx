@@ -45,16 +45,20 @@ export const RecentPolls = () => {
                   <span className="text-xs font-medium px-2.5 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">
                     {poll.category}
                   </span>
+                  <span className="font-semibold text-gray-800 dark:text-white mb-2 underline">
+                    {poll.title}
+                  </span>
                   {poll.status === "Active" && (
                     <div className="flex items-center text-sm text-gray-500">
                       {poll.userVote == null ? (
                         <>
                           <Clock className="h-3 w-3 mr-1" />
                           <span>
+                            {poll.expiresAt}
                             {(poll as ActivePoll).daysLeft > 0
                               ? (poll as ActivePoll).daysLeft === 1
-                                ? "day"
-                                : "days"
+                                ? "day remaining"
+                                : "days remaining"
                               : "Last Day to Vote"}{" "}
                           </span>
                         </>

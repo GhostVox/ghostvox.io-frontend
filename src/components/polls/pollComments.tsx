@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, XIcon } from "lucide-react";
 import { formatDistance } from "date-fns";
 import Image from "next/image";
 
@@ -14,7 +14,7 @@ type Comment = {
   Content: string;
   CreatedAt: string;
   UpdatedAt: string;
-  UserName: {
+  Username: {
     String: string;
     Valid: boolean;
   };
@@ -101,7 +101,8 @@ export default function PollComments({ pollId }: PollCommentsProps) {
       }
 
       // Add new comment to the list
-      const newComment = await response.json();
+      const resp = await response.json();
+      const newComment: Comment = resp;
       setComments((prev) => [newComment, ...prev]);
       setComment(""); // Clear comment input
     } catch (err) {
@@ -111,6 +112,32 @@ export default function PollComments({ pollId }: PollCommentsProps) {
       setCommentLoading(false);
     }
   };
+
+  const deleteComment = async (commentId: string) => {
+    if (!user) {
+      redirect(`/sign-in?redirect=/polls/${pollId}`);
+
+    }
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/polls/${pollId}/comments/${commentId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete comment");
+      }
+
+      // Remove deleted comment from the list
+      setComments((prev) => prev.filter((comment) => comment.ID !== commentId));
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+      setError("Failed to delete comment. Please try again.");
+    }
+  }
 
   // Format time for comment display
   const formatCommentTime = (dateString: string) => {
@@ -124,8 +151,8 @@ export default function PollComments({ pollId }: PollCommentsProps) {
 
   // Get display name for a comment
   const getDisplayName = (comment: Comment) => {
-    return comment.UserName && comment.UserName?.String && comment.UserName.Valid
-      ? comment.UserName.String
+    return comment.Username && comment.Username?.String && comment.Username.Valid
+      ? comment.Username.String
       : "Anonymous User";
   };
 
@@ -177,7 +204,7 @@ export default function PollComments({ pollId }: PollCommentsProps) {
         {/* Comments list */}
         <div className="space-y-6">
           {loading ? (
-            <div className="text-center py-8">
+            <div key="loading" className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-700 mx-auto"></div>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading comments...</p>
             </div>
@@ -214,6 +241,19 @@ export default function PollComments({ pollId }: PollCommentsProps) {
                     </div>
                     <p className="mt-1 text-gray-700 dark:text-gray-300">{comment.Content}</p>
                   </div>
+                  <div className="ml-4">
+                    {user && user.id === comment.UserID && (
+                      <button
+                        onClick={() => deleteComment(comment.ID)}
+                        className="text-red-600 hover:text-red-800 text-sm"
+                      >
+
+                        <div className="p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                          <XIcon className="h-4 w-4" />
+                        </div>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))
@@ -227,14 +267,16 @@ export default function PollComments({ pollId }: PollCommentsProps) {
         </div>
 
         {/* Load more comments button (if needed) */}
-        {comments.length > 0 && comments.length % 10 === 0 && (
-          <div className="mt-6 text-center">
-            <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
-              Load More Comments
-            </button>
-          </div>
-        )}
+        {
+          comments.length > 0 && comments.length % 10 === 0 && (
+            <div className="mt-6 text-center">
+              <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
+                Load More Comments
+              </button>
+            </div>
+          )
+        }
       </CardContent>
-    </Card>
+    </Card >
   );
 }
