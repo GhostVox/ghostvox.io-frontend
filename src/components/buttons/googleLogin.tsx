@@ -1,4 +1,10 @@
 import { googleLogin } from "@/hooks/googleLogin";
+
+/**
+ * A button component that initiates GitHub login when clicked.
+ * The button is styled with Tailwind CSS and includes the GitHub logo.
+ */
+
 export const GoogleLoginButton = () => {
   return (
     <button

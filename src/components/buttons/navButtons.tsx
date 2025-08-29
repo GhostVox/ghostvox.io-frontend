@@ -4,6 +4,12 @@ import Link from "next/link";
 import PrimaryButton from "@/components/ui/primaryButton";
 import { useRouter } from "next/navigation";
 
+
+/**
+ * Navigation buttons component that displays "sign in" and "sign up" buttons when the user is not authenticated,
+ * and "dashboard" and "sign out" buttons when the user is authenticated.
+ * The buttons have a hover effect that changes their opacity.
+ */
 const NavButtons = () => {
   const { user, setUser } = useAuth();
   const router = useRouter();
