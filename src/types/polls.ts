@@ -24,6 +24,7 @@ export interface Poll {
   comments: number;
   expiresAt: string;
   userVote: PollVote | null;
+  daysLeft?: number;
 }
 
 export interface FinishedPoll extends Poll {

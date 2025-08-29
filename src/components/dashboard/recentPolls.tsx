@@ -54,11 +54,10 @@ export const RecentPolls = () => {
                         <>
                           <Clock className="h-3 w-3 mr-1" />
                           <span>
-                            {poll.expiresAt}
                             {(poll as ActivePoll).daysLeft > 0
                               ? (poll as ActivePoll).daysLeft === 1
-                                ? "day remaining"
-                                : "days remaining"
+                                ? `${poll?.daysLeft} day remaining`
+                                : `${poll?.daysLeft} days remaining`
                               : "Last Day to Vote"}{" "}
                           </span>
                         </>
@@ -83,7 +82,7 @@ export const RecentPolls = () => {
                     <span>{poll.votes} votes</span>
                   </div>
                   <Link
-                    href={`/polls/${poll.id}`}
+                    href={`/ polls / ${poll.id}`}
                     className="text-purple-600 hover:text-purple-700 dark:text-purple-400 font-medium"
                   >
                     View Details
