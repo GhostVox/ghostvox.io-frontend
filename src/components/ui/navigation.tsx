@@ -40,9 +40,8 @@ export const Navigation = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-md" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-md" : "bg-transparent"
+        }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -82,9 +81,8 @@ export const Navigation = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`${
-            mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
-          } md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
+          className={`${mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+            } md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
         >
           <div className="pt-2 pb-4 space-y-1">
             <div className="py-2 flex flex-col items-center">

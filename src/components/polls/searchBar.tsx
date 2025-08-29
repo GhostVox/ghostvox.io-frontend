@@ -2,20 +2,34 @@ import { Search, Filter, BarChart2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { CardContent } from "../ui/card";
 import { categories, sortOptions } from "@/state/pollState";
+
+/**
+ * SearchBar component for capturing user filtering and sorting prefrences, updates current pages
+ * state to reflect the preferences.
+ * 
+ * Props:
+ * - searchQuery: Current search query string.
+ * - handleSearchChange: Function to handle changes in the search input.
+ * - selectedCategory: Currently selected category for filtering.
+ * - handleCategoryChange: Function to handle changes in the category select.
+ * - sortBy: Current sorting option.
+ * - handleSortChange: Function to handle changes in the sort select.
+ */
 export function SearchBar({
   searchQuery,
-  handleSearchChange,
   selectedCategory,
-  handleCategoryChange,
   sortBy,
+  handleSearchChange,
+  handleCategoryChange,
   handleSortChange,
 }: {
   searchQuery: string;
-  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedCategory: string;
-  handleCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   sortBy: string;
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleSortChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  setSortBy?: (value: string) => void;
 }) {
   return (
     <Card className="mb-8">

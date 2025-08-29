@@ -19,17 +19,16 @@ const NavButtons = () => {
     router.push("/");
   }
   return (
-    <div>
-      {user == null && (
-        <>
-          <Link href="/sign-in">
-            <PrimaryButton text="sign in" />
-          </Link>
-          <Link href="/sign-up">
-            <PrimaryButton text="sign up" />
-          </Link>
-        </>
-      )}
+    <div className="flex space-x-2 hover:opacity-100 opacity-10 transition-opacity duration-300"> {user == null && (
+      <>
+        <Link href="/sign-in">
+          <PrimaryButton text="sign in" />
+        </Link>
+        <Link href="/sign-up">
+          <PrimaryButton text="sign up" />
+        </Link>
+      </>
+    )}
       {user && (
         <>
           <Link href="/dashboard">

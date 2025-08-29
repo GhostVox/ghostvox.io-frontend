@@ -5,7 +5,7 @@ export function sortPolls<
 >(sortBy: string, polls: T[]): T[] {
   const sortedPolls = [...polls].sort((a, b) => {
     switch (sortBy) {
-      case "oldest": {
+      case "ending-soon": {
         const aDate = new Date(a.endedAt || a.expiresAt || 0).getTime();
         const bDate = new Date(b.endedAt || b.expiresAt || 0).getTime();
         return aDate - bDate;

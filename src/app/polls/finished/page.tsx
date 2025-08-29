@@ -32,9 +32,9 @@ export default function FinishedPollsPage() {
       setPolls,
       setError,
       url: "polls/finished",
-      setUsersPolls: () => {}, // Add missing required property
+      setUsersPolls: () => { }, // Add missing required property
     });
-  }, [page, selectedCategory]);
+  }, [page, selectedCategory, sortBy]);
 
   // Apply client-side filtering based on search query
   const filteredPolls = filterPolls(polls, searchQuery);
@@ -53,7 +53,9 @@ export default function FinishedPollsPage() {
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPolls(sortPolls(sortBy, filteredPolls));
     setSortBy(e.target.value);
+    console.log(sortBy)
   };
 
   const loadMorePolls = () => {
@@ -71,6 +73,7 @@ export default function FinishedPollsPage() {
         searchQuery={searchQuery}
         sortBy={sortBy}
         selectedCategory={selectedCategory}
+        setSortBy={setSortBy}
       />
 
       {/* Loading and Error States */}

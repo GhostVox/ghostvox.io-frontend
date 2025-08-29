@@ -74,9 +74,8 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center text-white bg-transparent hover:bg-white/10 border border-white rounded-lg px-5 py-2.5 transition-all"
+
                 >
-                  Explore Polls <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
             </div>

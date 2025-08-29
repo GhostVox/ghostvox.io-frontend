@@ -3,12 +3,24 @@ import { ActivePoll } from "@/types/polls";
 import { Clock } from "lucide-react";
 import { OptionSection } from "./optionSection";
 
+/**
+* Represents an active poll in the system.
+* 
+* @interface ActivePoll
+  */
+
 interface ActivePollCardProps {
+  /** The poll data to be displayed in the card. */
   poll: ActivePoll;
+  /** Indicates if the card is being viewed in detail mode. */
   isDetailView?: boolean;
+  /** Function to handle voting action. */
   onVote?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  /** The ID of the currently selected option for voting. */
   selectedOption?: string | null;
+  /** Function to set the selected option for voting. */
   setSelectedOption?: (optionId: string) => void;
+  /** Indicates if the voting action is currently loading. */
   votingLoading?: boolean;
 }
 

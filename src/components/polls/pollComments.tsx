@@ -51,11 +51,17 @@ export default function PollComments({ pollId }: PollCommentsProps) {
 
         const data = await response.json();
         console.log("Comments data:", data);
-
-        // Make sure data is an array
-        const commentsArray = Array.isArray(data) ? data : [data];
-        setComments(commentsArray);
-        setError(null);
+        if (data === null) {
+          setComments([]);
+          setError(null);
+          setLoading(false);
+          return;
+        } else {
+          // Make sure data is an array
+          const commentsArray = Array.isArray(data) ? data : [data];
+          setComments(commentsArray);
+          setError(null);
+        }
       } catch (err) {
         console.error("Error fetching comments:", err);
         setError("Failed to load comments. Please try again.");
@@ -151,7 +157,7 @@ export default function PollComments({ pollId }: PollCommentsProps) {
 
   // Get display name for a comment
   const getDisplayName = (comment: Comment) => {
-    return comment.Username && comment.Username?.String && comment.Username.Valid
+    return comment?.Username && comment?.Username?.String && comment?.Username.Valid
       ? comment.Username.String
       : "Anonymous User";
   };
@@ -211,12 +217,12 @@ export default function PollComments({ pollId }: PollCommentsProps) {
           ) : comments && comments.length > 0 ? (
             comments.map((comment) => (
               <div
-                key={comment.ID}
+                key={comment?.ID}
                 className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0"
               >
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mr-3">
-                    {comment.AvatarUrl && comment.AvatarUrl.Valid && comment.AvatarUrl.String ? (
+                    {comment?.AvatarUrl && comment?.AvatarUrl.Valid && comment?.AvatarUrl.String ? (
                       <Image
                         width={40}
                         height={40}
@@ -236,15 +242,15 @@ export default function PollComments({ pollId }: PollCommentsProps) {
                         {getDisplayName(comment)}
                       </h4>
                       <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
-                        {formatCommentTime(comment.CreatedAt)}
+                        {formatCommentTime(comment?.CreatedAt)}
                       </span>
                     </div>
-                    <p className="mt-1 text-gray-700 dark:text-gray-300">{comment.Content}</p>
+                    <p className="mt-1 text-gray-700 dark:text-gray-300">{comment?.Content}</p>
                   </div>
                   <div className="ml-4">
-                    {user && user.id === comment.UserID && (
+                    {user && user.id === comment?.UserID && (
                       <button
-                        onClick={() => deleteComment(comment.ID)}
+                        onClick={() => deleteComment(comment?.ID)}
                         className="text-red-600 hover:text-red-800 text-sm"
                       >
 

@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { parseToken } from "@/utils/parseToken";
 import { GithubLoginButton } from "@/components/buttons/githubLogin";
 import { GoogleLoginButton } from "@/components/buttons/googleLogin";
+import { CloseButton } from "@/components/buttons/closeButton";
 
 type FormFields = {
   email: string;
@@ -139,14 +140,7 @@ export const SignInForm = () => {
   return (
     <div className="flex justify-center items-center py-8">
       <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="pt-4 px-4 mb-0 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text">
-          <button className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-            <Link href="/" >
-              <span className="sr-only">Close</span>❌
-            </Link>
-          </button>
-        </div>
-
+        <CloseButton />
         <div className="p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Sign In</h2>
 

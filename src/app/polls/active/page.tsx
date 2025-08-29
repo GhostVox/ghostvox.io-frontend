@@ -11,6 +11,9 @@ import { LoadMorePolls } from "@/components/polls/loadMorePolls";
 import { NoPollsFound } from "@/components/polls/noPollsFound";
 import { ActivePollCard } from "@/components/polls/activePollCardPreview";
 
+/** * ActivePollsPage component displays a list of active polls with filtering, sorting, and pagination.
+ * It fetches data from the API and manages various states such as loading, error, and user interactions.
+ */
 export default function ActivePollsPage() {
   // State hooks for the component
   const [polls, setPolls] = useState<ActivePoll[]>([]);
@@ -32,7 +35,7 @@ export default function ActivePollsPage() {
       setPolls: setPolls,
       setHasMore: setHasMore,
       url: "/polls/active",
-      setUsersPolls: () => {}, // Add missing required property
+      setUsersPolls: () => { },
     });
   }, [page, selectedCategory]);
 
@@ -42,16 +45,31 @@ export default function ActivePollsPage() {
   // Apply client-side sorting
   const sortedPolls = sortPolls(sortBy, filteredPolls);
 
-  // Event handlers for filters
+  /**
+   * @param e - The change event from the search input
+   * Handles the change of the search input for filtering polls.
+   * Updates the searchQuery state.
+   */
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
+  /**
+   * @param e - The change event from the category select element
+   * Handles the change of the selected category for filtering polls.
+   * Updates the selectedCategory state and resets the page to 1.
+   */
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
     setPage(1); // Reset to first page when changing category
   };
 
+  /**
+   * @param e - The change event from the sort select element
+   * Handles the change of the sort option for sorting polls.
+   * Updates the sortBy state.
+   * @see {@link sortPolls} for sorting logic.
+   */
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value);
   };
@@ -76,44 +94,54 @@ export default function ActivePollsPage() {
       />
 
       {/* Loading and Error States */}
-      {loading && page === 1 && (
-        <Loading>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">loading</p>
-        </Loading>
-      )}
+      {
+        loading && page === 1 && (
+          <Loading>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">loading</p>
+          </Loading>
+        )
+      }
 
-      {error && (
-        <ErrorCard
-          title={"Failed to load polls"}
-          message={error}
-          onDismiss={() => {
-            window.location.reload();
-          }}
-        />
-      )}
+      {
+        error && (
+          <ErrorCard
+            title={"Failed to load polls"}
+            message={error}
+            onDismiss={() => {
+              window.location.reload();
+            }}
+          />
+        )
+      }
 
       {/* Poll Grid */}
-      {(!loading || page > 1) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedPolls.length > 0 ? (
-            sortedPolls.map((poll) => <ActivePollCard key={poll.id} poll={poll} />)
-          ) : (
-            <NoPollsFound />
-          )}
-        </div>
-      )}
+      {
+        (!loading || page > 1) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sortedPolls.length > 0 ? (
+              sortedPolls.map((poll) => <ActivePollCard key={poll.id} poll={poll} />)
+            ) : (
+              <NoPollsFound />
+            )}
+          </div>
+        )
+      }
 
       {/* Load More Button */}
-      {sortedPolls.length > 0 && hasMore && !loading && (
-        <LoadMorePolls loadMorePolls={loadMorePolls} />
-      )}
+      {
+        sortedPolls.length > 0 && hasMore && !loading && (
+          <LoadMorePolls loadMorePolls={loadMorePolls} />
+        )
+      }
 
       {/* Loading indicator for pagination */}
-      {loading && page > 1 && (
-        <Loading>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading more polls...</p>
-        </Loading>
-      )}
-    </div>
+      {
+        loading && page > 1 && (
+          <Loading>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading more polls...</p>
+          </Loading>
+        )
+      }
+    </div >
   );
 }

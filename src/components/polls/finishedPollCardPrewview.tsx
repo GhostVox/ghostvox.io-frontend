@@ -4,8 +4,13 @@ import { Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OptionSection } from "./optionSection";
 
+/**
+ * @interface FinishedPollCardProps
+ */
 interface FinishedPollCardProps {
+  /** The finished poll data to be displayed in the card. */
   poll: FinishedPoll;
+  /** Indicates if the card is being viewed in detail mode. */
   isDetailView?: boolean;
 }
 

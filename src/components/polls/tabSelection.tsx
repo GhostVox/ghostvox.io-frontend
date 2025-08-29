@@ -17,11 +17,10 @@ export function TabSelection({
         <li className="mr-2">
           <button
             onClick={() => changeTab(Selection.All)}
-            className={`inline-block p-4 rounded-t-lg ${
-              tab === Selection.All
+            className={`inline-block p-4 rounded-t-lg ${tab === Selection.All
                 ? "text-purple-600 border-b-2 border-purple-600 dark:text-purple-400 dark:border-purple-400"
                 : "text-gray-500 hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-            }`}
+              }`}
           >
             All Polls
           </button>
@@ -29,11 +28,10 @@ export function TabSelection({
         <li className="mr-2">
           <button
             onClick={() => changeTab(Selection.Active)}
-            className={`inline-block p-4 rounded-t-lg ${
-              tab === Selection.Active
+            className={`inline-block p-4 rounded-t-lg ${tab === Selection.Active
                 ? "text-purple-600 border-b-2 border-purple-600 dark:text-purple-400 dark:border-purple-400"
                 : "text-gray-500 hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-            }`}
+              }`}
           >
             Active Polls
           </button>
@@ -41,11 +39,10 @@ export function TabSelection({
         <li className="mr-2">
           <button
             onClick={() => changeTab(Selection.Finished)}
-            className={`inline-block p-4 rounded-t-lg ${
-              tab === Selection.Finished
+            className={`inline-block p-4 rounded-t-lg ${tab === Selection.Finished
                 ? "text-purple-600 border-b-2 border-purple-600 dark:text-purple-400 dark:border-purple-400"
                 : "text-gray-500 hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-            }`}
+              }`}
           >
             Finished Polls
           </button>
