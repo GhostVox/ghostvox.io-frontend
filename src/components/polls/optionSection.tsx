@@ -64,7 +64,7 @@ export function OptionSection<
             <span>{poll.comments} comments</span>
           </div>
         </div>
-        {!isDetailView && <VoteButton poll={poll} text={poll.userVote ? "View Results" : "Vote"} />}
+        {!isDetailView && <VoteButton poll={poll} text={(poll.userVote || poll.status == "Archived") ? "View Results" : "Vote"} />}
       </div>
     </div>
   );

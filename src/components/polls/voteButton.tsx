@@ -30,13 +30,18 @@ export function VoteButton<
     winner?: string;
     comments?: number;
     id: string;
+    status?: string;
   },
 >({ poll, text }: { poll: T; text: string }) {
   const pollCtx = useCurrentPoll();
 
   const handleclick = () => {
     pollCtx.setPoll(poll as unknown as Parameters<typeof pollCtx.setPoll>[0]);
-    redirect("/polls/" + poll.id);
+    if (poll.status == "Archived") {
+      redirect("/polls/" + poll.id);
+    } else {
+      redirect("/polls/" + poll.id);
+    }
   };
 
   return (

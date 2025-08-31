@@ -82,7 +82,7 @@ export const RecentPolls = () => {
                     <span>{poll.votes} votes</span>
                   </div>
                   <Link
-                    href={`/ polls / ${poll.id}`}
+                    href={`/polls/${poll.id}`}
                     className="text-purple-600 hover:text-purple-700 dark:text-purple-400 font-medium"
                   >
                     View Details

@@ -40,8 +40,8 @@ export const AvatarUploadModal = ({
     }
 
     // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setError("File size must be less than 5MB");
+    if (file.size > (1 >> 20)) {
+      setError("File size must be 1MB or less");
       return;
     }
 
@@ -97,11 +97,10 @@ export const AvatarUploadModal = ({
         <div className="p-6 space-y-4">
           {/* Drop area */}
           <div
-            className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer ${
-              dragActive
-                ? "border-purple-500 bg-purple-50 dark:bg-purple-900/10"
-                : "border-gray-300 dark:border-gray-700"
-            }`}
+            className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer ${dragActive
+              ? "border-purple-500 bg-purple-50 dark:bg-purple-900/10"
+              : "border-gray-300 dark:border-gray-700"
+              }`}
             onClick={() => fileInputRef.current?.click()}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
@@ -124,7 +123,7 @@ export const AvatarUploadModal = ({
                   Drag and drop an image here or click to browse
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Supported formats: JPEG, PNG, GIF, etc. (Max size: 5MB)
+                  Supported formats: JPEG, PNG, GIF  (Max size: 1MB)
                 </p>
               </div>
             )}

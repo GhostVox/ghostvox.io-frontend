@@ -4,7 +4,6 @@ import Link from "next/link";
  * A close button that navigates to the home page.
  * The button has a hover effect that shows a gradient overlay.
  */
-
 export const CloseButton = () => {
   return (
     <div className="pt-4 px-4">

@@ -60,7 +60,7 @@ export function FinishedPollCard({ poll, isDetailView = false }: FinishedPollCar
         {poll.winner && (
           <div className="mb-3">
             <div className="inline-block bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 text-xs font-medium px-2.5 py-1 rounded">
-              {poll.winner === "draw" ? (
+              {poll.winner === "draw" || poll.winner === "" ? (
                 "Result: Draw"
               ) : (
                 <>
