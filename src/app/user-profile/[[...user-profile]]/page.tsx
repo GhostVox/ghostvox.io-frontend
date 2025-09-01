@@ -8,7 +8,6 @@ import ErrorCard from "@/components/cards/errorCard";
 import Image from "next/image";
 import { User, Upload, Camera } from "lucide-react";
 import { AvatarUploadModal } from "@/components/user-profile/avatarUploadModal";
-
 type UserProfileForm = {
   firstName: string;
   lastName: string;
@@ -116,10 +115,10 @@ export default function UserProfilePage() {
 
       // Create form data to send the file
       const formData = new FormData();
-      formData.append("avatar", file);
+      formData.append("image", file);
 
-      const response = await fetch(`${baseUrl}/users/avatar`, {
-        method: "POST",
+      const response = await fetch(`${baseUrl}/users/profile/avatar`, {
+        method: "PUT",
         credentials: "include",
         body: formData,
       });
@@ -132,10 +131,10 @@ export default function UserProfilePage() {
       const data = await response.json();
 
       // Update user context with new avatar URL
-      if (data.pictureUrl) {
+      if (data.avatar_url) {
         setUser({
           ...user,
-          picture: data.pictureUrl,
+          picture: data.avatar_url,
         });
       }
 
@@ -162,6 +161,9 @@ export default function UserProfilePage() {
     }
 
     setIsLoading(true);
+
+
+
 
     try {
       // Using the API URL from environment variables as seen in other components
@@ -213,6 +215,25 @@ export default function UserProfilePage() {
       setIsLoading(false);
     }
   };
+  const handleDeleteAccount = async () => {
+
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/users`
+    let response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!response.ok) {
+      return { error: "Failed to delete account" }
+    }
+    setUser(null);
+    router.push("/");
+
+  }
+
 
   if (!user) {
     return (
@@ -242,64 +263,75 @@ export default function UserProfilePage() {
         onUpload={handleAvatarUpload}
       />
 
+
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Profile sidebar */}
-        <div className="md:col-span-1">
-          <Card>
-            <CardContent className="flex flex-col items-center p-6">
-              <div
-                className="mb-4 relative group cursor-pointer"
-                onClick={() => setIsModalOpen(true)}
-              >
-                {user.picture ? (
-                  <div className="relative">
-                    <Image
-                      src={user.picture}
-                      alt={`${user.firstName} ${user.lastName}`}
-                      width={100}
-                      height={100}
-                      className="rounded-full object-cover w-24 h-24"
-                    />
-                    <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                      <Camera className="text-white h-8 w-8" />
+        <div className="flex flex-col items-center md:items-start md:pr-6 space-y-4">
+          <div className="md:col-span-1">
+            <Card>
+              <CardContent className="flex flex-col items-center p-6">
+                <div
+                  className="mb-4 relative group cursor-pointer"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  {user.picture ? (
+                    <div className="relative">
+                      <Image
+                        src={user.picture}
+                        alt={`${user.firstName} ${user.lastName}`}
+                        width={100}
+                        height={100}
+                        className="rounded-full object-cover w-24 h-24"
+                      />
+                      <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <Camera className="text-white h-8 w-8" />
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="relative w-24 h-24">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white text-3xl font-semibold">
-                      <User size={40} />
+                  ) : (
+                    <div className="relative w-24 h-24">
+                      <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white text-3xl font-semibold">
+                        <User size={40} />
+                      </div>
+                      <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <Camera className="text-white h-8 w-8" />
+                      </div>
                     </div>
-                    <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                      <Camera className="text-white h-8 w-8" />
+                  )}
+                  {avatarLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
                     </div>
-                  </div>
+                  )}
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                  {user.firstName} {user.lastName}
+                </h2>
+                {user.username && (
+                  <p className="text-purple-600 dark:text-purple-400 mb-2">@{user.username}</p>
                 )}
-                {avatarLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-                  </div>
-                )}
-              </div>
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-                {user.firstName} {user.lastName}
-              </h2>
-              {user.username && (
-                <p className="text-purple-600 dark:text-purple-400 mb-2">@{user.username}</p>
-              )}
-              <p className="text-gray-600 dark:text-gray-400 text-sm">{user.email}</p>
-              <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
-                Role: {user.role || "User"}
-              </p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{user.email}</p>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
+                  Role: {user.role || "User"}
+                </p>
 
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="mt-4 text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 flex items-center"
-              >
-                <Upload className="h-4 w-4 mr-1" />
-                Change Profile Picture
-              </button>
-            </CardContent>
-          </Card>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="mt-4 text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 flex items-center"
+                >
+
+                  <Upload className="h-4 w-4 mr-1" />
+                  Change Profile Picture
+                </button>
+              </CardContent>
+            </Card>
+          </div>
+          <button
+            className="w-full px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account
+          </button>
         </div>
 
         {/* Profile form */}
@@ -377,6 +409,6 @@ export default function UserProfilePage() {
           </Card>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

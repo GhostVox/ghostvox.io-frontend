@@ -40,7 +40,7 @@ export const AvatarUploadModal = ({
     }
 
     // Validate file size (max 5MB)
-    if (file.size > (1 >> 20)) {
+    if (file.size > (1 * 1024 * 1024)) {
       setError("File size must be 1MB or less");
       return;
     }

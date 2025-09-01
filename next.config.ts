@@ -19,8 +19,19 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         pathname: "**",
+      }, {
+        // Add this new block for your virtual-hosted style URL
+        protocol: 'https',
+        hostname: 'ghostvox.io.s3.us-east-1.amazonaws.com',
+        port: '',
+        pathname: '/avatars/**',
       },
-    ],
+      {
+        protocol: 'https',
+        hostname: 's3.us-east-1.amazonaws.com',
+        port: '',
+        pathname: '/ghostvox.io/avatars/**',
+      },],
   },
 };
 

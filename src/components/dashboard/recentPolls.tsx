@@ -36,7 +36,7 @@ export const RecentPolls = () => {
         </CardHeader>
         <CardContent className="p-6">
           <div className="space-y-5">
-            {recentPolls.map((poll) => (
+            {recentPolls && recentPolls.length > 0 ? (recentPolls.map((poll) => (
               <div
                 key={poll.id}
                 className="p-4 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
@@ -82,14 +82,17 @@ export const RecentPolls = () => {
                     <span>{poll.votes} votes</span>
                   </div>
                   <Link
-                    href={`/polls/${poll.id}`}
+                    href={`/polls/ ${poll.id}`}
                     className="text-purple-600 hover:text-purple-700 dark:text-purple-400 font-medium"
                   >
                     View Details
                   </Link>
                 </div>
               </div>
-            ))}
+            ))) : (
+              <p className="text-center text-gray-500 dark:text-gray-400">No recent polls available.</p>
+            )
+            }
           </div>
 
           <div className="mt-6 text-center">
