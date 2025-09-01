@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FinishedPoll } from "@/types/polls";
-import { FetchPolls } from "@/hooks/fetchPolls";
+import { usePolls } from "@/hooks/usePolls"; // Import the custom hook
 import { SearchBar } from "@/components/polls/searchBar";
 import { sortPolls, filterPolls } from "@/utils/polls";
 import ErrorCard from "@/components/cards/errorCard";
@@ -12,34 +12,26 @@ import { NoPollsFound } from "@/components/polls/noPollsFound";
 import { FinishedPollCard } from "@/components/polls/finishedPollCardPrewview";
 
 export default function FinishedPollsPage() {
-  // State hooks for the component
-  const [polls, setPolls] = useState<FinishedPoll[]>([]);
+  // State for UI filters and pagination
+  const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [sortBy, setSortBy] = useState("newest");
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  // Fetch polls from API when page or category changes
+  // Use the custom hook to get data and state for finished polls
+  const { polls, loading, error, hasMore } = usePolls<FinishedPoll>(
+    "/polls/finished", // The specific API endpoint
+    page,
+    selectedCategory
+  );
+
+  // Effect to reset the page number when filters change
   useEffect(() => {
-    FetchPolls<FinishedPoll>({
-      page: page,
-      selectedCategory,
-      setLoading,
-      setHasMore,
-      setPolls,
-      setError,
-      url: "polls/finished",
-      setUsersPolls: () => { }, // Add missing required property
-    });
-  }, [page, selectedCategory, sortBy]);
+    setPage(1);
+  }, [selectedCategory]);
 
-  // Apply client-side filtering based on search query
+  // Apply client-side filtering and sorting
   const filteredPolls = filterPolls(polls, searchQuery);
-
-  // Apply client-side sorting
   const sortedPolls = sortPolls(sortBy, filteredPolls);
 
   // Event handlers for filters
@@ -49,17 +41,16 @@ export default function FinishedPollsPage() {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
-    setPage(1); // Reset to first page when changing category
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPolls(sortPolls(sortBy, filteredPolls));
     setSortBy(e.target.value);
-    console.log(sortBy)
   };
 
   const loadMorePolls = () => {
-    setPage((prev) => prev + 1);
+    if (!loading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   return (
@@ -73,45 +64,40 @@ export default function FinishedPollsPage() {
         searchQuery={searchQuery}
         sortBy={sortBy}
         selectedCategory={selectedCategory}
-        setSortBy={setSortBy}
       />
 
-      {/* Loading and Error States */}
+      {/* Loading state for the initial page load */}
       {loading && page === 1 && (
         <Loading>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading...</p>
         </Loading>
       )}
 
+      {/* Error state */}
       {error && (
         <ErrorCard
           title={"Failed to load polls"}
           message={error}
-          onDismiss={() => {
-            window.location.reload();
-          }}
+          onDismiss={() => window.location.reload()}
         />
       )}
 
-      {/* Poll Grid */}
-      {(!loading || page > 1) && (
+      {/* Poll Grid - Render if not loading on page 1 */}
+      {(!loading || page > 1) && sortedPolls.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedPolls.length > 0 ? (
-            sortedPolls.map((poll) => {
-              return <FinishedPollCard key={poll.id} poll={poll} />;
-            })
-          ) : (
-            <NoPollsFound />
-          )}
+          {sortedPolls.map((poll) => (
+            <FinishedPollCard key={poll.id} poll={poll} />
+          ))}
         </div>
       )}
 
-      {/* Load More Button */}
-      {sortedPolls.length > 0 && hasMore && !loading && (
-        <LoadMorePolls loadMorePolls={loadMorePolls} />
-      )}
+      {/* No Polls Found state - Render if not loading and no polls exist */}
+      {!loading && sortedPolls.length === 0 && <NoPollsFound />}
 
-      {/* Loading indicator for pagination */}
+      {/* Load More Button */}
+      {hasMore && !loading && <LoadMorePolls loadMorePolls={loadMorePolls} />}
+
+      {/* Loading indicator for subsequent pages */}
       {loading && page > 1 && (
         <Loading>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading more polls...</p>

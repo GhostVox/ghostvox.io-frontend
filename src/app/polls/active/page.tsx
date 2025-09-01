@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ActivePoll } from "@/types/polls";
-import { FetchPolls } from "@/hooks/fetchPolls";
+import { usePolls } from "@/hooks/usePolls"; // Import the custom hook
 import { filterPolls, sortPolls } from "@/utils/polls";
 import ErrorCard from "@/components/cards/errorCard";
 import { Header } from "@/components/polls/header";
@@ -11,71 +11,46 @@ import { LoadMorePolls } from "@/components/polls/loadMorePolls";
 import { NoPollsFound } from "@/components/polls/noPollsFound";
 import { ActivePollCard } from "@/components/polls/activePollCardPreview";
 
-/** * ActivePollsPage component displays a list of active polls with filtering, sorting, and pagination.
- * It fetches data from the API and manages various states such as loading, error, and user interactions.
- */
 export default function ActivePollsPage() {
-  // State hooks for the component
-  const [polls, setPolls] = useState<ActivePoll[]>([]);
+  // State for UI filters and pagination
+  const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [sortBy, setSortBy] = useState("newest");
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  // Fetch polls from API when page or category changes
+  // Use the custom hook to get data and state for active polls
+  const { polls, loading, error, hasMore } = usePolls<ActivePoll>(
+    "/polls/active", // The specific API endpoint
+    page,
+    selectedCategory
+  );
+
+  // Effect to reset the page number when filters change
   useEffect(() => {
-    FetchPolls<ActivePoll>({
-      page: page,
-      selectedCategory: selectedCategory,
-      setLoading: setLoading,
-      setError: setError,
-      setPolls: setPolls,
-      setHasMore: setHasMore,
-      url: "/polls/active",
-      setUsersPolls: () => { },
-    });
-  }, [page, selectedCategory]);
+    setPage(1);
+  }, [selectedCategory]);
 
-  // Apply client-side filtering based on search query
+  // Apply client-side filtering and sorting
   const filteredPolls = filterPolls(polls, searchQuery);
-
-  // Apply client-side sorting
   const sortedPolls = sortPolls(sortBy, filteredPolls);
 
-  /**
-   * @param e - The change event from the search input
-   * Handles the change of the search input for filtering polls.
-   * Updates the searchQuery state.
-   */
+  // Event handlers for filters
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  /**
-   * @param e - The change event from the category select element
-   * Handles the change of the selected category for filtering polls.
-   * Updates the selectedCategory state and resets the page to 1.
-   */
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
-    setPage(1); // Reset to first page when changing category
   };
 
-  /**
-   * @param e - The change event from the sort select element
-   * Handles the change of the sort option for sorting polls.
-   * Updates the sortBy state.
-   * @see {@link sortPolls} for sorting logic.
-   */
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value);
   };
 
   const loadMorePolls = () => {
-    setPage((prev) => prev + 1);
+    if (!loading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   return (
@@ -93,55 +68,43 @@ export default function ActivePollsPage() {
         selectedCategory={selectedCategory}
       />
 
-      {/* Loading and Error States */}
-      {
-        loading && page === 1 && (
-          <Loading>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">loading</p>
-          </Loading>
-        )
-      }
+      {/* Loading state for the initial page load */}
+      {loading && page === 1 && (
+        <Loading>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">loading</p>
+        </Loading>
+      )}
 
-      {
-        error && (
-          <ErrorCard
-            title={"Failed to load polls"}
-            message={error}
-            onDismiss={() => {
-              window.location.reload();
-            }}
-          />
-        )
-      }
+      {/* Error state */}
+      {error && (
+        <ErrorCard
+          title={"Failed to load polls"}
+          message={error}
+          onDismiss={() => window.location.reload()}
+        />
+      )}
 
       {/* Poll Grid */}
-      {
-        (!loading || page > 1) && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedPolls.length > 0 ? (
-              sortedPolls.map((poll) => <ActivePollCard key={poll.id} poll={poll} />)
-            ) : (
-              <NoPollsFound />
-            )}
-          </div>
-        )
-      }
+      {(!loading || page > 1) && sortedPolls.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortedPolls.map((poll) => (
+            <ActivePollCard key={poll.id} poll={poll} />
+          ))}
+        </div>
+      )}
+
+      {/* No Polls Found state */}
+      {!loading && sortedPolls.length === 0 && <NoPollsFound />}
 
       {/* Load More Button */}
-      {
-        sortedPolls.length > 0 && hasMore && !loading && (
-          <LoadMorePolls loadMorePolls={loadMorePolls} />
-        )
-      }
+      {hasMore && !loading && <LoadMorePolls loadMorePolls={loadMorePolls} />}
 
       {/* Loading indicator for pagination */}
-      {
-        loading && page > 1 && (
-          <Loading>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading more polls...</p>
-          </Loading>
-        )
-      }
-    </div >
+      {loading && page > 1 && (
+        <Loading>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Loading more polls...</p>
+        </Loading>
+      )}
+    </div>
   );
 }

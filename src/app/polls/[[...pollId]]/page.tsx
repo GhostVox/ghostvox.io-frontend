@@ -42,7 +42,6 @@ export default function PollDetailPage() {
         if (!response.ok) {
           const data = await response.json();
           throw new Error(data.errors || "Failed to fetch poll data");
-          return;
         }
 
         const data = await response.json();
