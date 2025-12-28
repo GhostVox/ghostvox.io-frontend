@@ -167,6 +167,13 @@ export default function CreatePollForm() {
         if (data.errors.accessToken) {
           getSession();
         }
+        if (data.errors.profanity) {
+          setErrors((prev) => ({
+            ...prev,
+            error: "Inappropriate language is not allowed",
+          }));
+          return;
+        }
         throw new Error(data.errors || "Failed to create poll");
       }
       // Redirect to the dashboard or polls page

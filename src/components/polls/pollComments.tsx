@@ -248,7 +248,7 @@ export default function PollComments({ pollId }: PollCommentsProps) {
                     <p className="mt-1 text-gray-700 dark:text-gray-300">{comment?.Content}</p>
                   </div>
                   <div className="ml-4">
-                    {user && user.id === comment?.UserID && (
+                    {((user && user.role == "admin") || (user && user.id === comment?.UserID)) && (
                       <button
                         onClick={() => deleteComment(comment?.ID)}
                         className="text-red-600 hover:text-red-800 text-sm"
