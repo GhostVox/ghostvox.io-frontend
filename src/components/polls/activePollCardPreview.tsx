@@ -2,6 +2,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ActivePoll } from "@/types/polls";
 import { Clock } from "lucide-react";
 import { OptionSection } from "./optionSection";
+import { useAuth } from "@/context/AuthContext";
+import { deletePoll } from "@/hooks/deletePoll";
 
 /**
 * Represents an active poll in the system.
@@ -34,6 +36,12 @@ export function ActivePollCard({
 }: ActivePollCardProps) {
   const hasVoted = poll?.userVote !== null;
 
+
+  const { user } = useAuth();
+
+  const handledeletePoll = async () => {
+    deletePoll(poll.id)
+  }
   return (
     <Card
       key={poll.id}
@@ -116,6 +124,7 @@ export function ActivePollCard({
                 disabled={!selectedOption || votingLoading || hasVoted}
                 className="w-full py-2 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
+
                 {votingLoading ? "Submitting..." : "Submit Vote"}
               </button>
             </div>

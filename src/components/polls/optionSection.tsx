@@ -1,8 +1,12 @@
-import { BarChart2, MessageSquare } from "lucide-react";
+import { BarChart2, MessageSquare, XIcon } from "lucide-react";
 import { calculatePercentage } from "@/utils/polls";
 import { VoteButton } from "./voteButton";
 import { PollOption, PollVote } from "@/types/polls";
 
+import { useAuth } from "@/context/AuthContext";
+import { deletePoll } from "@/hooks/deletePoll";
+
+import { redirect } from "next/navigation";
 export interface OptionSectionProps<T> {
   poll: T;
   isDetailView?: boolean;
@@ -19,6 +23,15 @@ export function OptionSection<
     status?: string;
   },
 >({ poll, isDetailView = false }: OptionSectionProps<T>) {
+  const { user } = useAuth();
+  const handleDeletePoll = async () => {
+    console.log("Deleting poll with ID:", poll.id);
+    const result = await deletePoll(poll.id);
+    if (result) {
+      redirect("/dashboard");
+
+    }
+  }
   return (
     <div className="mt-2 mb-4 space-y-2">
       {/* Show all options in detail view, otherwise show just the first 3 */}
@@ -66,6 +79,19 @@ export function OptionSection<
         </div>
         {!isDetailView && <VoteButton poll={poll} text={(poll.userVote || poll.status == "Archived") ? "View Results" : "Vote"} />}
       </div>
-    </div>
+      {user && user.role == "admin" && (
+        <button
+          onClick={handleDeletePoll}
+          className="text-red-600 hover:text-red-800 text-sm"
+        >
+          <div
+            className="p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+            <XIcon className="h-4 w-4" />
+          </div>
+
+        </button>
+      )
+      }
+    </div >
   );
 }

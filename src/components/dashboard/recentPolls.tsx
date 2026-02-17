@@ -20,6 +20,8 @@ export const RecentPolls = () => {
       setRecentPolls(data);
     };
     fetchRecentPolls();
+    const interval = setInterval(fetchRecentPolls, 60000); // Refresh every 60 seconds
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   return (

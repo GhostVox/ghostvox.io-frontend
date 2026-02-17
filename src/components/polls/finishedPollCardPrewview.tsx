@@ -3,7 +3,7 @@ import { formatEndDate } from "@/utils/formatEndDate";
 import { Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OptionSection } from "./optionSection";
-
+import { useAuth } from "@/context/AuthContext";
 /**
  * @interface FinishedPollCardProps
  */
@@ -15,6 +15,7 @@ interface FinishedPollCardProps {
 }
 
 export function FinishedPollCard({ poll, isDetailView = false }: FinishedPollCardProps) {
+  const { user } = useAuth();
   return (
     <Card
       key={poll.id}
