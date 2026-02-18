@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72754cb3-d5ba-4626-b962-dbfffa615983" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/__test__/utils/test-utils.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/__test__/utils/test-utils.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/polls/deletePollButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/polls/optionSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/polls/optionSection.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +21,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="100" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FormatOnSaveOptions">
@@ -73,10 +77,10 @@
 }</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1772071211717" />
-    <option name="spentUsd" value="0.0244945" />
+    <option name="spentUsd" value="0.049431503" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="7" />
+    <option name="suspendCountdown" value="6" />
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
@@ -110,7 +114,8 @@
       <updated>1771170381991</updated>
       <workItem from="1771353421080" duration="1265000" />
       <workItem from="1771395254562" duration="1710000" />
-      <workItem from="1771425115719" duration="2541000" />
+      <workItem from="1771425115719" duration="4981000" />
+      <workItem from="1771431278061" duration="1541000" />
     </task>
     <servers />
   </component>
