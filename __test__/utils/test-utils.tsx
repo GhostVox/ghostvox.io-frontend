@@ -6,6 +6,7 @@ import { User } from "@/types/user";
 // Default mock user for testing
 export const mockUser: User = {
   id: "test-id",
+  username: "test",
   email: "test@example.com",
   firstName: "Test",
   lastName: "User",
