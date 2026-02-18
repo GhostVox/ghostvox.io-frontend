@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="72754cb3-d5ba-4626-b962-dbfffa615983" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/polls/pollComments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/polls/pollComments.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/buttons/navButtons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/navButtons.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,10 +75,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1772071211717" />
-    <option name="spentUsd" value="0.053105254" />
+    <option name="spentUsd" value="0.06648926" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="5" />
+    <option name="suspendCountdown" value="4" />
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
@@ -115,7 +115,7 @@
       <workItem from="1771425115719" duration="4981000" />
       <workItem from="1771431278061" duration="1620000" />
       <workItem from="1771433157283" duration="58000" />
-      <workItem from="1771436888334" duration="2057000" />
+      <workItem from="1771436888334" duration="2854000" />
     </task>
     <servers />
   </component>
