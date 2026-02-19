@@ -113,11 +113,20 @@ export default function PollComments({pollId}: PollCommentsProps) {
             // Add new comment to the list
             const resp = await response.json();
             const newComment: Comment = resp;
-            setComments(prev => {
-                const existingIds = new Set(prev.map(c => c.ID));
-                const newComments = commentsArray.filter((c: Comment) => !existingIds.has(c.ID));
-                return newComments.length > 0 ? [...newComments, ...prev] : prev;
+            etComments((prev) => {
+                // 2. Create a Set of existing IDs for O(1) lookup performance
+                const existingIds = new Set(prev.map((c) => c.ID));
+
+                // 3. Check if the newly created comment already exists in the state
+                // (This prevents duplicates if the setInterval fetch beat this function to the punch)
+                if (existingIds.has(newComment.ID)) {
+                    return prev;
+                }
+
+                // 4. Prepend the new comment to the top of the list
+                return [newComment, ...prev];
             });
+
             setComment(""); // Clear comment input
         } catch (err) {
             console.error("Error submitting comment:", err);
