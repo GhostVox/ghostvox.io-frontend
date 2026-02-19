@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="72754cb3-d5ba-4626-b962-dbfffa615983" name="Changes" comment="Fixed comment updating logic on line 116 to 128 of pollComments.tsx">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/buttons/navButtons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/navButtons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/primaryButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/primaryButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/navigation.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +117,7 @@
       <workItem from="1771433157283" duration="58000" />
       <workItem from="1771436888334" duration="2971000" />
       <workItem from="1771453372739" duration="5000" />
-      <workItem from="1771534537338" duration="1106000" />
+      <workItem from="1771534537338" duration="1700000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed comment updating logic on line 116 to 128 of pollComments.tsx">
       <option name="closed" value="true" />

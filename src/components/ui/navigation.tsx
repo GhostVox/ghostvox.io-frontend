@@ -85,7 +85,7 @@ export const Navigation = () => {
             } md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
         >
           <div className="pt-2 pb-4 space-y-1">
-            <div className="py-2 flex flex-col items-center">
+            <div className="py-2 flex flex-col items-center bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 rounded-lg shadow-md pt-4">
               <NavButtons />
             </div>
           </div>
