@@ -25,7 +25,7 @@ const NavButtons = () => {
     router.push("/");
   }
   return (
-    <div className="flex space-x-2 hover:opacity-100 opacity-50 transition-opacity duration-300"> {user == null && (
+    <div className="flex space-x-2 hover:opacity-100 opacity-100 transition-opacity duration-300"> {user == null && (
       <>
         <Link href="/sign-in">
           <PrimaryButton text="sign in" />
