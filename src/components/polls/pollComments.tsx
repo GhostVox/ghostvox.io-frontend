@@ -113,7 +113,7 @@ export default function PollComments({pollId}: PollCommentsProps) {
             // Add new comment to the list
             const resp = await response.json();
             const newComment: Comment = resp;
-            etComments((prev) => {
+            setComments((prev) => {
                 // 2. Create a Set of existing IDs for O(1) lookup performance
                 const existingIds = new Set(prev.map((c) => c.ID));
 
