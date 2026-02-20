@@ -39,7 +39,7 @@ export const SignInForm = () => {
 
 
     const [rememberMe, setRememberMe] = useState(() => {
-        let user = localStorage.getItem("remberMe");
+        const user = localStorage.getItem("remberMe");
         if (user !== null) {
             return true;
         } else {

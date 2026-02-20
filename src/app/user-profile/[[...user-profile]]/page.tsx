@@ -217,8 +217,8 @@ export default function UserProfilePage() {
   };
   const handleDeleteAccount = async () => {
 
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/users`
-    let response = await fetch(url, {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/users`
+    const response = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

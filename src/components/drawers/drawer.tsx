@@ -7,7 +7,6 @@ import {DesktopToggleBtn} from "./desktopToggleBtn";
 import {UserProfileSection} from "./userProfileSection";
 import {AppNav} from "./appNav";
 import {UserNav} from "./userNav";
-import {Loading} from "@/components/polls/loading"
 
 export const Drawer = () => {
     const {user, setUser, loading} = useAuth();

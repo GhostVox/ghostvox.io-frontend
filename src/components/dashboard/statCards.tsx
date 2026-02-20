@@ -2,7 +2,6 @@
 import {Card, CardContent} from "@/components/ui/card";
 import {BarChart2, Users, Bell} from "lucide-react";
 import {useEffect, useState} from "react";
-import {Loading} from "../polls/loading";
 
 type UserStats = {
     TotalComments: number;
@@ -41,9 +40,9 @@ export const StatCards = () => {
             {loading ? (
                 // Render 3 Skeletons that match the card height perfectly
                 <>
-                    <div className="h-[114px] w-full animate-pulse bg-gray-200 dark:bg-gray-800 rounded-xl"/>
-                    <div className="h-[114px] w-full animate-pulse bg-gray-200 dark:bg-gray-800 rounded-xl"/>
-                    <div className="h-[114px] w-full animate-pulse bg-gray-200 dark:bg-gray-800 rounded-xl"/>
+                    <StatSkeleton/>
+                    <StatSkeleton/>
+                    <StatSkeleton/>
                 </>
             ) : (
                 <>
