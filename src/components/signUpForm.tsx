@@ -154,7 +154,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="w-full max-w-md mt-32 mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
       <CloseButton />
       <div className="p-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Create Account</h2>
