@@ -8,12 +8,14 @@ import { usePathname, useRouter } from "next/navigation"; // Changed import to n
 type UserCtxType = {
   user: User | null;
   setUser: (user: User | null) => void;
+  loading: boolean;
 };
 
 // 2. Create the context with a default value
 export const authCtx = createContext<UserCtxType>({
   user: null,
   setUser: () => {}, // Placeholder function
+  loading: true,
 });
 
 // 3. Create the custom hook to use this context

@@ -23,12 +23,17 @@ export const Navigation = () => {
 
   // Handle scroll events to add background when scrolled
   useEffect(() => {
-    const handleScroll = () => {
+   const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
 
-    if (!showNavigation) {
+    // ONLY add the listener if we are actually rendering the nav
+    if (showNavigation) {
       window.addEventListener("scroll", handleScroll);
+
+      // Run it once immediately in case the page is already scrolled on load
+      handleScroll();
+
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [showNavigation]);

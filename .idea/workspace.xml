@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="72754cb3-d5ba-4626-b962-dbfffa615983" name="Changes" comment="Fixed comment updating logic on line 116 to 128 of pollComments.tsx">
+    <list default="true" id="72754cb3-d5ba-4626-b962-dbfffa615983" name="Changes" comment="Fixed shifting in UI on dashboard page when reloading the page.&#10;&#10;Updated the nav bar on the homepage to have the background change colors when user scrolls down&#10;&#10;implemented the remember me functionality for the sign-in page&#10;Fixed layout of the sign-in page and sign-up page for mobile screens">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/navigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__test__/utils/test-utils.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/__test__/utils/test-utils.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user-profile/[[...user-profile]]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user-profile/[[...user-profile]]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/statCards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/statCards.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/drawers/drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/drawers/drawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/signInForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signInForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +38,31 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1771601909" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1771601908" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -55,7 +88,7 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "dev",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
@@ -67,18 +100,25 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "npm.Next.js: server-side.executor": "Run",
-    "settings.editor.selected.configurable": "swagger",
+    "settings.editor.selected.configurable": "configurable.tailwindcss",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/ghostvox/.local/share/JetBrains/Toolbox/apps/intellij-idea/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1772071211717" />
-    <option name="spentUsd" value="0.06648926" />
+    <option name="spentUsd" value="0.1201375" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="4" />
+    <option name="suspendCountdown" value="2" />
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
@@ -117,7 +157,10 @@
       <workItem from="1771433157283" duration="58000" />
       <workItem from="1771436888334" duration="2971000" />
       <workItem from="1771453372739" duration="5000" />
-      <workItem from="1771534537338" duration="1700000" />
+      <workItem from="1771534537338" duration="2334000" />
+      <workItem from="1771601370555" duration="93000" />
+      <workItem from="1771601478406" duration="1227000" />
+      <workItem from="1771602863038" duration="9475000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed comment updating logic on line 116 to 128 of pollComments.tsx">
       <option name="closed" value="true" />
@@ -127,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771535034002</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fixed shifting in UI on dashboard page when reloading the page.&#10;&#10;Updated the nav bar on the homepage to have the background change colors when user scrolls down&#10;&#10;implemented the remember me functionality for the sign-in page&#10;Fixed layout of the sign-in page and sign-up page for mobile screens">
+      <option name="closed" value="true" />
+      <created>1771610820836</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1771610820836</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,7 +197,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fixed comment updating logic on line 116 to 128 of pollComments.tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed comment updating logic on line 116 to 128 of pollComments.tsx" />
+    <MESSAGE value="Fixed shifting in UI on dashboard page when reloading the page.&#10;&#10;Updated the nav bar on the homepage to have the background change colors when user scrolls down&#10;&#10;implemented the remember me functionality for the sign-in page&#10;Fixed layout of the sign-in page and sign-up page for mobile screens" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed shifting in UI on dashboard page when reloading the page.&#10;&#10;Updated the nav bar on the homepage to have the background change colors when user scrolls down&#10;&#10;implemented the remember me functionality for the sign-in page&#10;Fixed layout of the sign-in page and sign-up page for mobile screens" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

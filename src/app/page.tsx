@@ -201,7 +201,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="p-6 rounded-lg bg-white/10 backdrop-blur-sm">
-                <p className="text-lg italic mb-4">"{testimonial.quote}"</p>
+                <p className="text-lg italic mb-4">&quot;{testimonial.quote}&quot;</p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 rounded-full bg-purple-300 text-purple-800 flex items-center justify-center font-bold">
                     {testimonial.author.charAt(0)}
