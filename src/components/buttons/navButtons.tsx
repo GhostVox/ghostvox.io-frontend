@@ -28,10 +28,10 @@ const NavButtons = () => {
     <div className="flex space-x-2 hover:opacity-100 opacity-100 md:opacity-80 transition-opacity duration-300"> {user == null && (
       <>
         <Link href="/sign-in">
-          <PrimaryButton text="sign in" />
+          <PrimaryButton text="Sign in" />
         </Link>
         <Link href="/sign-up">
-          <PrimaryButton text="sign up" />
+          <PrimaryButton text="Sign up" />
         </Link>
       </>
     )}

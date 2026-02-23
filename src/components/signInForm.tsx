@@ -1,13 +1,14 @@
 "use client";
-import {FormInput} from "@/components/ui/formInput";
+import { FormInput } from "@/components/ui/formInput";
 import Link from "next/link";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/context/AuthContext";
-import {parseToken} from "@/utils/parseToken";
-import {GithubLoginButton} from "@/components/buttons/githubLogin";
-import {GoogleLoginButton} from "@/components/buttons/googleLogin";
-import {CloseButton} from "@/components/buttons/closeButton";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { parseToken } from "@/utils/parseToken";
+import { GithubLoginButton } from "@/components/buttons/githubLogin";
+import { GoogleLoginButton } from "@/components/buttons/googleLogin";
+import { CloseButton } from "@/components/buttons/closeButton";
+import { useEffect } from "react";
 
 type FormFields = {
     email: string;
@@ -20,13 +21,22 @@ type FormErrors = {
 
 export const SignInForm = () => {
     const router = useRouter();
-    const {setUser} = useAuth();
+    const { setUser } = useAuth();
 
     const [formData, setFormData] = useState<FormFields>({
-        email: localStorage.getItem("email") || "",
+        email: "",
         password: "",
     });
 
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("email");
+        if (savedEmail) {
+            setFormData((prev) => ({
+                ...prev,
+                email: savedEmail,
+            }));
+        }
+    }, [])
     const [errors, setErrors] = useState<FormErrors>({
         email: null,
         password: null,
@@ -49,7 +59,7 @@ export const SignInForm = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value,
@@ -71,7 +81,7 @@ export const SignInForm = () => {
 
         // Validate form
         let hasErrors = false;
-        const newErrors: FormErrors = {email: null, password: null};
+        const newErrors: FormErrors = { email: null, password: null };
 
         if (!formData.email) {
             newErrors.email = "Email is required";
@@ -119,9 +129,9 @@ export const SignInForm = () => {
                 if (data.errors) {
                     // Handle specific error messages from backend
                     if (data.errors.email) {
-                        setErrors((prev) => ({...prev, email: data.errors.email}));
+                        setErrors((prev) => ({ ...prev, email: data.errors.email }));
                     } else if (data.errors.password) {
-                        setErrors((prev) => ({...prev, password: data.errors.password}));
+                        setErrors((prev) => ({ ...prev, password: data.errors.password }));
                     } else {
                         // General error
                         setErrors({
@@ -172,15 +182,15 @@ export const SignInForm = () => {
     return (
         <div className="flex mt-32  items-center py-8 ">
             <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-                <CloseButton/>
+                <CloseButton />
                 <div className="p-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Sign In</h2>
 
                     {!classic ? (
                         <div className="space-y-3 mb-6">
-                            <GoogleLoginButton/>
+                            <GoogleLoginButton />
 
-                            <GithubLoginButton/>
+                            <GithubLoginButton />
 
                             <div className="relative flex items-center justify-center my-6">
                                 <div className="absolute w-full border-t border-gray-300"></div>
