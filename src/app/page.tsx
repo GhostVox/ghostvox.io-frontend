@@ -85,17 +85,20 @@ export default function Home() {
           </div>
         </div>
         <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-          <button className="text-white animate-bounce">
+          <a
+            href="#Works"
+            className="text-white animate-bounce inline-block p-2 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-full"
+            aria-label="Scroll down to Works section"
+          >
             <ChevronDown className="h-8 w-8" />
-          </button>
-        </div>
+          </a>        </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-16 px-6 bg-white dark:bg-gray-900">
+      <section className="py-16 px-6 bg-white dark:bg-gray-900" id="Works">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How GhostVox Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 scroll-margin-top: 10rem" >How GhostVox Works</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               A simple process to make your voice heard in the community
             </p>
