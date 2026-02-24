@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import PrimaryButton from "@/components/ui/primaryButton";
 import PollCard from "@/components/homepage/poll-card";
@@ -50,6 +51,16 @@ export default function Home() {
     },
   ];
 
+
+  const smoothScrollToWorks = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const worksSection = document.getElementById("Works");
+    if (worksSection) {
+      worksSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
   return (
     <main className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -85,13 +96,13 @@ export default function Home() {
           </div>
         </div>
         <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-          <a
-            href="#Works"
+          <button
+            onClick={smoothScrollToWorks}
             className="text-white animate-bounce inline-block p-2 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-full"
             aria-label="Scroll down to Works section"
           >
             <ChevronDown className="h-8 w-8" />
-          </a>        </div>
+          </button>        </div>
       </section>
 
       {/* How It Works */}
@@ -290,6 +301,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </main >
   );
 }
